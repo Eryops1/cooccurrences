@@ -8,4 +8,4 @@ Overall, our data show that most species maintain their spatial associations ove
 [link to manuscript](https://docs.google.com/document/d/1KR0dv7v_4Ajuaas5ygwyHME2rlHCxMAXGSAvvIH5wig/edit?tab=t.0) 
 
 
-![alt text](fig1_V2.png "Data and Processing")
+![alt text](figures/fig1_V2.png "Data and Processing")
