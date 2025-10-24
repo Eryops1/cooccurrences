@@ -6,3 +6,6 @@ Surprisingly, we found that large-scale bird co-occurrence patterns remained rem
 Overall, our data show that most species maintain their spatial associations over decades, suggesting that co-occurring species show comparable reactions to environmental changes. Exploring how this stability in co-occurrence patterns aligns with previously observed temporal community composition turnover could be an exciting direction for future work.
 
 [link to manuscript](https://docs.google.com/document/d/1KR0dv7v_4Ajuaas5ygwyHME2rlHCxMAXGSAvvIH5wig/edit?tab=t.0) 
+
+
+![alt text](fig1_V2.png "Data and Processing")
