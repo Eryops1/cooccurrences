@@ -5,20 +5,11 @@
 # Last Modified: 2025-10-27
 # Purpose: Loads raw presence absence and occupancy probability data, saves the
 #          processed data for analysis.
-# Outputs: 
+# Outputs: Four .rds objects named e.g. "more_lists_atlas=5_SES_cor_scales=1_2025-06-07.rds"
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
 
 # Load libraries ----------------------------------------------------------
-
-# pacman::p_load(sf,
-#                terra,
-#                tictoc,
-#                RPostgres,
-#                dbplyr,
-#                dplyr,
-#                data.table)
-
 
 rm(list=(ls())) # clear workspace
 library(groundhog)
