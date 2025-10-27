@@ -1,4 +1,4 @@
-# Script: 01_co-occurrence_measures_occupancy.R
+# Script: 01_get_co-occurrence_estimates.R
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
