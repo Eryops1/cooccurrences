@@ -1,4 +1,8 @@
-# cooccurrences
+# Large-scale co-occurrence dynamics in bird assemblages
+This is the github repo holding the code to repeat the analysis steps in _Large-scale co-occurrence dynamics in bird assemblages_. Will be made accessible for peer review and later publication via e.g. Zenodo release. 
+
+Here is the [link to the manuscript](https://docs.google.com/document/d/1KR0dv7v_4Ajuaas5ygwyHME2rlHCxMAXGSAvvIH5wig/edit?tab=t.0) 
+
 
 ## Summary 
 Recent studies reveal shifts in biodiversity, but how species assemblages change
@@ -11,9 +15,9 @@ functional, or range size changes. Only aquatic species showed slight
 aggregation increases. Species pairs’ co-occurrences and typical groupings
 changed minimally, suggesting co-occurring species respond similarly to
 environmental shifts. This stability contrasts with observed community turnover,
-offering a different perpective on biodiversty change and interesting avenue for
+offering a different perspective on biodiversty change and interesting avenue for
 future research.
-[link to manuscript](https://docs.google.com/document/d/1KR0dv7v_4Ajuaas5ygwyHME2rlHCxMAXGSAvvIH5wig/edit?tab=t.0) 
 
 
-![alt text](figures/fig1_V2.png "Data and Processing")
+
+![](figures/fig1_V2.png "Data and Processing")
