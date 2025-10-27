@@ -1,5 +1,6 @@
 # cooccurrences
 
+## Summary 
 Recent studies reveal shifts in biodiversity, but how species assemblages change
 spatially remains unclear. Analyzing bird co-occurrence patterns across four
 large-scale, long-term datasets from Czechia, Europe, New York, and New Zealand,
