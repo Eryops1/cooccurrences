@@ -33,23 +33,14 @@ theme_set(theme_classic())
 
 
 
-library(vegan)
-library(bipartite)
-library(tictoc)
-library(cowplot)
-#library(ggplot2)
-#theme_set(theme_classic())
-library(cooccur)
-library(sf)
-#library(terra)
-library(parallel)
+
 
 
 
 # Load data --------------------------------------------------------------------
 
 # chose a dataset_ids: 5(CZ), 6(NY), 17(NZ), 26(EU)
-dataset_id = 5
+dataset_id = 26
 
 files = dir(paste0('data/occ_', as.character(dataset_id)), full.names = T)
 
@@ -83,11 +74,11 @@ if(dataset_id==26){
   grid = vect(paste0("data/all_scales_atlas_", dataset_id, ".gpkg"))
   grid = grid[grid$datasetID==26,]
   grid = grid[grid$scalingID==1,]
-  
+
   all(dat$siteID %in% grid$siteID)
   plot(grid[grid$siteID %in% dat$siteID])
   # looks good?
-  
+
   # grid = vect(paste0("data/all_scales_atlas_", dataset_id, ".gpkg"))
   # grid = grid[grid$datasetID==26,]
   # grid = grid[grid$scalingID==1,]
