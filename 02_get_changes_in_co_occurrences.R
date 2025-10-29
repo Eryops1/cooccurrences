@@ -8,7 +8,7 @@
 # Output: .rds object named "data/processed_spass.rds"
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
-#        Runs parts in parallel, tested for linux should work windows too 
+#        Runs parts in parallel, tested for linux should work 
 
 # Load libraries ----------------------------------------------------------
 
@@ -18,7 +18,6 @@ pkgs <- c("data.table",
           "parallel",
           "tictoc")
 groundhog.library(pkgs, "2025-10-25")
-theme_set(theme_classic())
 
 
 
