@@ -15,7 +15,6 @@
 rm(list=(ls())) # clear workspace
 library(groundhog)
 pkgs <- c("data.table",
-          "progressr",
           "parallel",
           "tictoc")
 groundhog.library(pkgs, "2025-10-25")
