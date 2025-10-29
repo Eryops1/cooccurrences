@@ -24,24 +24,7 @@ groundhog.library(pkgs, "2025-10-25")
 
 
 
-# rm(list=(ls()))
-# library(vegan)
-# library(data.table)
-# library(tictoc)
-# library(cowplot)
-# library(ggplot2)
-# library(ggplot2)
-# theme_set(theme_classic(base_size = 9)+
-#             theme(strip.background = element_blank())+
-#             theme(axis.title = ggtext::element_markdown())+
-#             theme(legend.title = ggtext::element_markdown()))
-# library(cooccur)
-# library(sf)
-# library(terra)
-# library(ggpubr)
-# library(ggridges)
-# library(ggsci)
-# library(clootl)
+
 
 
 # read data --------------------------------------------------------------------
