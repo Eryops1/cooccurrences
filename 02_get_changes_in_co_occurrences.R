@@ -8,7 +8,7 @@
 # Output: .rds object named "data/processed_spass.rds"
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
-#        Uses mclappy to process atlas data in parallel 
+#        Runs parts in parallel, tested for linux should work windows too 
 
 # Load libraries ----------------------------------------------------------
 
