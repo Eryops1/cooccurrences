@@ -2,10 +2,12 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-10-29
+# Last Modified: 2025-10-30
 # Purpose: Calculate dissimilarities in co-occurrence measures between sampling
 #          periods, calculate mantel tests for influence of phylogeny and traits.
-# Output: .rds object named "data/processed_spass.rds"
+# Output: .rds objects named "data/processed_spass.rds",
+#          "sum_mean_psi_for_maps.rds", "range_change.rds", "mantel_results.rds",
+#          "braycurtis.rds"
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
 
@@ -77,6 +79,31 @@ dat = dat[datasetID==cond$V1[1] & alltime==cond$N[1] |
 table(dat$alltime, dat$datasetID)
 any(is.na(dat$mean.psi)) # no NAs? good!
 
+# save sum occupancy probabilities for making maps later
+dat[, sum.psi_siteID:=sum(mean.psi),by=.(siteID, datasetID, endYear)]
+maps = unique(dat[,.(sum.psi_siteID, siteID, datasetID, endYear)])
+saveRDS(maps, "data/sum_mean_psi_for_maps.rds")
+
+# get changes in ranges 
+# change = sum occupancy last time - sum occupancy first time
+dat[, mean.psi_sum:=sum(mean.psi), by=.(datasetID, scientificName, endYear)]
+dat[, change_occupancy:=(sum(mean.psi[endYear==max(endYear)]) - sum(mean.psi[endYear==1])) /sum(mean.psi[endYear==1]), 
+    by=.(datasetID, scientificName)]
+
+# get change in present grid cells
+dat[, pres.abs_sum:=sum(pres.abs), by=.(datasetID, scientificName, endYear)]
+dat[, change_pres.abs:=(sum(pres.abs[endYear==max(endYear)]) - sum(pres.abs[endYear==1])) /sum(pres.abs[endYear==1]), 
+    by=.(datasetID, scientificName)]
+
+dat$atlas = dat$datasetID
+dat$atlas = gsub("26", "Europe", dat$atlas)
+dat$atlas = gsub("5", "Czechia", dat$atlas)
+dat$atlas = gsub("6", "New York", dat$atlas)
+dat$atlas = gsub("17", "New Zealand", dat$atlas)
+
+saveRDS(unique(dat[, .(datasetID, endYear, scientificName, scalingID, alltime, 
+                       mean.psi_sum, pres.abs_sum, change_occupancy, change_pres.abs)]), 
+               "data/range_change.rds")
 
 
 
@@ -136,8 +163,9 @@ gc()
 # build Spearman correlation matrix from occupancy data for Mantel tests
 
 mat = list()
-for(a in 1:length(atlas)){
-  tmp = dat[datasetID==atlas[a],]
+atlas_vec = sort(unique(dat$datasetID))
+for(a in 1:length(atlas_vec)){
+  tmp = dat[datasetID %in% atlas_vec[a],]
   times = sort(unique(tmp$endYear))
   mat_int = list()
   for(t in 1:length(times)){
@@ -145,7 +173,7 @@ for(a in 1:length(atlas)){
     tmp2 = dcast(tmp2, rowid(scientificName) + siteID ~ scientificName, value.var = 'mean.psi', fill = NA)
     tmp2 = tmp2[, -c("scientificName")]
     tmp2 = as.dist(cor(tmp2[, -c("siteID")], method="s"))
-    mat_int[[t]] = list(data.table(dataset_id = atlas[a],
+    mat_int[[t]] = list(data.table(dataset_id = atlas_vec[a],
                                    time_bin = t),
                         tmp2)
   }
