@@ -21,3 +21,9 @@ future research.
 
 
 ![](figures/fig1_V2.png "Data and Processing")
+
+
+## To do list:
+-  Move all the occupancy data processing into one script so the non-open data can
+be handled more easily. That includes the dissimilarity matrix things in script
+03.
