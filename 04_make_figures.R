@@ -484,7 +484,7 @@ corscat = ggplot(fig_hist, aes(x=cor_obs, y=cor_ses, col=atlas))+
   stat_cor(method = "spearman", label.x = 0.2, label.y = -25, size=3, 
            label.sep = "\n", p.accuracy = 0.001, cor.coef.name = "rho", col="black")+
   facet_grid(time_bin~atlas)+
-  scale_color_startrek(guide=FALSE)+
+  scale_color_startrek(guide="none")+
   labs(y="*Z*-score Spearman's \U03C1", x="Spearman's \U03C1")
 
 plot_grid(zhist, corscat, ncol=1, labels = c("a)", "b)"), label_fontface = "plain", label_size = 10)
