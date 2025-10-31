@@ -138,9 +138,6 @@ ggplot(st_as_sf(p1[p1$scalingID==1,]), aes(fill=mean.psi))+
 
 
 
-
-
-
 # Get co-occurrence measures ---------------------------------------------------
 
 # we gonna get spearman correlation and C-scores (vegdist) 
