@@ -259,9 +259,19 @@ stopCluster(cl)
 
 
 
-
 ## save ----
 outfile = paste0("data/more_lists_atlas=", dataset_id, "_SES_cor_scales=", paste0(s, collapse = "_"), "_", Sys.Date(), ".rds")
-saveRDS(res, outfile)
+# save switch to prevent large files from EU atlas
+if(dataset_id==26){ 
+  chunk1 = res[[1]][1:round(ncol(pairs)/2)]
+  chunk2 = res[[1]][round(ncol(pairs)/2)+1:ncol(pairs)]
+  chunk3 = res[[2]][1:round(ncol(pairs)/2)]
+  chunk4 = res[[2]][round(ncol(pairs)/2)+1:ncol(pairs)]
+  for(j in 1:4){
+    saveRDS(get(paste0("chunk", j)), 
+            paste0("data/more_lists_atlas=", dataset_id, "_SES_cor_scales=", paste0(s, collapse = "_"), "_", Sys.Date(), "_chunk_", j,".rds"))
+  }
+}else{saveRDS(res, outfile)}
+
 
 
