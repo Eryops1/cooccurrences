@@ -923,11 +923,12 @@ rm(taxplot, trophplot, habplot)
 range_change$atlas = range_change$datasetID
 range_change$atlas <- atlas_names[as.character(range_change$atlas)]
 range_change$species = range_change$scientificName
-# add number of grids first time period
+# add number of grids  / sum occupancy first time period
 range_change[, pres.abs_sum_T1:=pres.abs_sum[endYear==1], by=.(atlas, species)]
+range_change[, occupancy_sum_T1:=mean.psi_sum[endYear==1], by=.(atlas, species)]
 
 indiv = merge(indiv, range_change[,.(species, atlas, change_occupancy, change_pres.abs, 
-                                     pres.abs_sum, mean.psi_sum, pres.abs_sum_T1)], by=c("atlas", "species"), 
+                                     pres.abs_sum, mean.psi_sum, pres.abs_sum_T1, occupancy_sum_T1)], by=c("atlas", "species"), 
               all.x=TRUE)
 
 # use log ratio for change occupancy
@@ -951,17 +952,17 @@ tapply(indiv, indiv$atlas, function(x){cor.test(x$delta_cor_obs_median, as.numer
 
 
 
-## general range size within Primary Lifestyle groups (n occupied cells T1) ----
+## general range size within Primary Lifestyle groups (sum occupancy all cells T1) ----
 
-ggplot(indiv, aes(y=Primary.Lifestyle, x=pres.abs_sum_T1, fill=atlas))+
+ggplot(indiv, aes(y=Primary.Lifestyle, x=occupancy_sum_T1, fill=atlas))+
   geom_boxplot(varwidth = F)+
   scale_fill_startrek(guide="none")+
-  labs(y="", x="N grids")+
+  labs(y="", x="Sum of occupancy probabilites in T1")+
   facet_wrap(~atlas, ncol=4)
-ggsave(paste0("figures/", "Ngrids_lifestyle.png"), units="mm", width=180, height = 40, bg="white", dpi = 300)
+ggsave(paste0("figures/", "sum_occupancy_T1_lifestyle.png"), units="mm", width=180, height = 40, bg="white", dpi = 300)
 
-tapply(indiv, indiv$atlas, function(x){pairwise.wilcox.test(x$pres.abs_sum, x$Primary.Lifestyle, p.adjust.method = "fdr")})
-pairwise.wilcox.test(indiv$pres.abs_sum, indiv$Primary.Lifestyle, p.adjust.method = "fdr")
+tapply(indiv, indiv$atlas, function(x){pairwise.wilcox.test(x$mean.psi_sum, x$Primary.Lifestyle, p.adjust.method = "fdr")})
+pairwise.wilcox.test(indiv$mean.psi_sum, indiv$Primary.Lifestyle, p.adjust.method = "fdr")
 
 
 
