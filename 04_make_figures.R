@@ -1021,18 +1021,22 @@ ggsave(paste0("figures/", "occupancy_change_per_lifestyle.png"), width=180, heig
 # divide species pair
 chan$sp1 = gsub("\\|.*", "", chan$species_pair)
 chan$sp2 = gsub(".*\\|", "", chan$species_pair)
-# add ranges for species from T1, for both species
+# add ranges for species from T1, for both species (occupancy)
+chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, mean.psi_sum)]), all.x=TRUE, 
+             by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
+chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, mean.psi_sum)]), all.x=TRUE, 
+             by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
 chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
              by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
 chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
              by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
 
-# mark pairs with < 50 grids
+# mark pairs with species  < 50 grids (this is based on presence absence records to keep it straight forward)
 chan[, small_ranges:= pres.abs_sum.x<50 | pres.abs_sum.y<50, ]
 # mark pairs with unbalanced range ratios
-chan[,range_ratio_pres.abs:=min(c(pres.abs_sum.x,pres.abs_sum.y))/max(c(pres.abs_sum.x,pres.abs_sum.y)), by=.(species_pair, atlas)]
+chan[,range_ratio_pres.abs:=min(c(mean.psi_sum.x,mean.psi_sum.y))/max(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
 # the minimum number of occ cells in a pair (both species)
-chan[,min_pair_range:=min(c(pres.abs_sum.x,pres.abs_sum.y)), by=.(species_pair, atlas)]
+chan[,min_pair_range:=min(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
 
 
 ### plot 
@@ -1041,7 +1045,7 @@ ggplot(unique(chan[, .(delta_cor_obs, range_ratio_pres.abs, atlas, min_pair_rang
   geom_point(alpha=0.05)+
   geom_smooth()+
   labs(x="range size ratio", y="\U0394 Spearman's \U03C1")+
-  scale_color_viridis_c(name = "N grid cells (smaller species)")+
+  scale_color_viridis_c(name = "Sum occupancy probablity\n (smaller species)")+
   facet_wrap("atlas")+
   theme(legend.position = "bottom", legend.key.width = unit(12, "mm"))
 ggsave(paste0("figures/", "delta_cor_obs_VS_range_size_ratio.png"), width=6.5, height = 6, bg="white")
