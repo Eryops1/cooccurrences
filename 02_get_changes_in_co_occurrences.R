@@ -2,7 +2,7 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-10-29
+# Last Modified: 2025-11-05
 # Purpose: Loads co-occurrence estimates, gets changes between sampling periods
 #          incl null model estimates, saves the processed data for analysis.
 # Output: .rds object named "data/processed_spass.rds"
@@ -83,13 +83,28 @@ process_change <- function(a, org) {
 
 # Read data ---------------------------------------------------------------
 
-files = dir("data", pattern = "cor_", full.names = TRUE)
-org = lapply(files, readRDS)
+#a26 = readRDS("../assembly_rules/data/more_lists_atlas=26_SES_cor_scales=1_2025-06-21.rds")
+files1 = dir("data", pattern = "cor_", full.names = TRUE)
+files2 = files1[grep("chunk", files1)]
 
-# attach atlas name
-atlas = unlist(regmatches(files, gregexpr("atlas=[0-9]{1,2}", files)))
-names(org) = gsub("atlas=","", atlas)
+# little list magic code for the atlas 26 chunks
+org1 = lapply(files2, readRDS)
+o1 = c(org1[[1]][], org1[[2]][])
+o2 = c(org1[[3]][], org1[[4]][])
+org1 = list(o1,o2)
 
+org2 = lapply(files1[!grepl("chunk", files1)], readRDS)
+# combine
+org = c(list(org1), org2)
+
+
+#rm(org1, org2)
+#org = c(a26, org2)
+
+
+# attach atlas name (double check)
+atlas = c("26", "17", "5", "6")
+names(org) =atlas
 
 
 
