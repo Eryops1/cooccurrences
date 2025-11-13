@@ -83,7 +83,7 @@ process_change <- function(a, org) {
 
 # Read data ---------------------------------------------------------------
 
-#a26 = readRDS("../assembly_rules/data/more_lists_atlas=26_SES_cor_scales=1_2025-06-21.rds")
+
 files1 = dir("data", pattern = "cor_", full.names = TRUE)
 files2 = files1[grep("chunk", files1)]
 
@@ -96,10 +96,7 @@ org1 = list(o1,o2)
 org2 = lapply(files1[!grepl("chunk", files1)], readRDS)
 # combine
 org = c(list(org1), org2)
-
-
-#rm(org1, org2)
-#org = c(a26, org2)
+rm(org1, org2)
 
 
 # attach atlas name (double check)
