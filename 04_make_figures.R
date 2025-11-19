@@ -2,7 +2,7 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-10-31
+# Last Modified: 2025-11-19
 # Purpose: Make figures, get stats.
 # Output: Figures (ong and svg), tables (csv) 
 # Notes: groundhog will ensure the exact same R packages will be used and create
@@ -280,7 +280,7 @@ temp = rbind(cz,eu,ny,nz)
 temp = merge(temp, tmp)
 temp = merge(temp, species, by='atlas', all.x=TRUE)
 
-ggplot(temp, aes(x=year, y=atlas, col=atlas, size=V1))+
+ggplot(temp, aes(x=year, y=atlas, col=atlas, size=2))+
   geom_point(pch=15)+
   scale_color_startrek(guide='none')+
   scale_size_continuous(guide='none')+
@@ -296,6 +296,13 @@ ceiling(mean(2000:2005)) - ceiling(mean(1980:1985)), # NY
 ceiling(mean(1999:2004)) - ceiling(mean(1969:1979)), # NZ
 ceiling(mean(2013:2017)) - ceiling(mean(1972:1995)) # EU
 )
+
+c(ceiling(mean(2014:2017)) - ceiling(mean(1985:1989)), # CZ
+     ceiling(mean(2000:2005)) - ceiling(mean(1980:1985)), # NY
+     ceiling(mean(1999:2004)) - ceiling(mean(1969:1979)), # NZ
+     ceiling(mean(2013:2017)) - ceiling(mean(1972:1995)) # EU
+)
+
 
 rm(temp, cz, ny, nz, eu)
 
@@ -353,6 +360,20 @@ rm(d1,d2,sp)
 
 tmp = unique(stat[,.(species_pair, atlas, status_T1, status_Tlast)])
 tmp[,transition:=paste(status_T1, status_Tlast, sep = "-->")]
+tmp2 = as.data.table(table(tmp$transition, tmp$atlas))
+tmp2[, status_T1:=gsub("-->.*", "", V1)]
+tmp2[, status_T2:=gsub(".*-->", "", V1)]
+tmp2[, change_status:=status_T1!=status_T2]
+tmp2[, sum_per_start:=sum(N), by=.(V2, status_T1)]
+tmp2[, prop_per_trans:=N/sum_per_start, by=.(V2, status_T1)]
+
+tmp3 = tmp2[, sum(N), by=.(change_status)]
+tmp3[, prop:=round(V1/sum(V1), 3)]
+fwrite(tmp3, "output/transition_stats1.csv")
+tmp3 = tmp2[, sum(N), by=.(change_status, V2)]
+tmp3[, prop:=round(V1/sum(V1), 3), by=V2]
+fwrite(tmp3, "output/transition_stats2.csv")
+fwrite(tmp2, "output/transition_stats3.csv")
 
 # atli
 atli = sort(unique(tmp$atlas))
@@ -432,7 +453,7 @@ ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
   scale_fill_manual(name = "", values = c("#1398E9", "grey", "#E96513"), labels=c("segregated", "neutral", "aggregated"))+
   scale_color_startrek(guide="none")+
   labs(y="count", x="Co-occurrence (Spearman's \U03C1)")+
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
 ggsave(paste0("figures/", "cor_obs_histogram.png"), width=6, height = 2.5, bg="white")
 
 
@@ -556,7 +577,10 @@ statdat$label_m = paste0('mean:\n', statdat$delta_cor_obs_mean)
 ggsave(paste0("figures/", "delta_cor_obs_density.png"), width=6, height = 1.7, bg="white", dpi=300)
 
 ### stats -----
+# by atlas
 psych::describeBy(data=chan, delta_cor_obs ~ atlas, mat=TRUE, digits=2, IQR=TRUE, quant=c(.25,.75))
+# all data
+psych::describe(chan$delta_cor_obs, IQR=TRUE, quant=c(.25,.75))
 
 # # V2, for poster
 # ggplot(chan, aes(x=delta_cor_obs, col=atlas, fill=atlas))+
@@ -792,6 +816,10 @@ rm(indiv_int, indiv_int2)
 ## bray curtis dissimilarity results -----
 
 bc$atlas <- atlas_names[as.character(bc$atlas)]
+# add correlation values 
+bc = merge(bc, indiv[,.(species, atlas, delta_cor_obs_mean)])
+ggplot(bc, aes(x=bray_curtis, y=delta_cor_obs_mean))+geom_point()+geom_smooth(method="lm")+scale_x_continuous(trans = "sqrt")
+cor.test(bc$bray_curtis, bc$delta_cor_obs_mean, method = "s")
 
 (bcfig = ggplot(bc, aes(x=bray_curtis))+
     geom_histogram(fill="grey80")+
@@ -1053,7 +1081,7 @@ ggsave(paste0("figures/", "delta_cor_obs_VS_range_size_ratio.png"), width=6.5, h
 
 
 # get Fig 4 for more range_ratio>=0.15 & small_ranges==FALSE (SI figure)
-sub = chan[range_ratio_pres.abs>=0.15 & small_ranges==FALSE,]
+sub = chan[range_ratio_pres.abs>=0.2 & small_ranges==FALSE,]
 
 
 # get average changes for species, only from balanced pairs
