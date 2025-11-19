@@ -1,0 +1,46 @@
+Transition,Atlas,N,prop_per_trans,change_status
+aggregated-->aggregated,Czechia,6827,0.68,FALSE
+aggregated-->neutral,Czechia,1546,0.15,TRUE
+aggregated-->segregated,Czechia,1611,0.16,TRUE
+neutral-->aggregated,Czechia,1655,0.44,TRUE
+neutral-->neutral,Czechia,961,0.26,FALSE
+neutral-->segregated,Czechia,1117,0.30,TRUE
+segregated-->aggregated,Czechia,1643,0.28,TRUE
+segregated-->neutral,Czechia,1192,0.20,TRUE
+segregated-->segregated,Czechia,3042,0.52,FALSE
+aggregated-->aggregated,Europe,34853,0.87,FALSE
+aggregated-->neutral,Europe,2093,0.05,TRUE
+aggregated-->segregated,Europe,3276,0.08,TRUE
+neutral-->aggregated,Europe,2094,0.43,TRUE
+neutral-->neutral,Europe,848,0.17,FALSE
+neutral-->segregated,Europe,1954,0.40,TRUE
+segregated-->aggregated,Europe,3152,0.10,TRUE
+segregated-->neutral,Europe,1881,0.06,TRUE
+segregated-->segregated,Europe,27570,0.85,FALSE
+aggregated-->aggregated,New York,9472,0.79,FALSE
+aggregated-->neutral,New York,1173,0.10,TRUE
+aggregated-->segregated,New York,1329,0.11,TRUE
+neutral-->aggregated,New York,1124,0.41,TRUE
+neutral-->neutral,New York,702,0.26,FALSE
+neutral-->segregated,New York,922,0.34,TRUE
+segregated-->aggregated,New York,1665,0.16,TRUE
+segregated-->neutral,New York,1079,0.10,TRUE
+segregated-->segregated,New York,7945,0.74,FALSE
+aggregated-->aggregated,New Zealand,7432,0.87,FALSE
+aggregated-->neutral,New Zealand,532,0.06,TRUE
+aggregated-->segregated,New Zealand,575,0.07,TRUE
+neutral-->aggregated,New Zealand,519,0.50,TRUE
+neutral-->neutral,New Zealand,255,0.24,FALSE
+neutral-->segregated,New Zealand,269,0.26,TRUE
+segregated-->aggregated,New Zealand,983,0.33,TRUE
+segregated-->neutral,New Zealand,341,0.11,TRUE
+segregated-->segregated,New Zealand,1676,0.56,FALSE
+,,,,
+Totals,Czechia,10830,0.553,FALSE
+,Czechia,8764,0.447,TRUE
+,Europe,63271,0.814,FALSE
+,Europe,14450,0.186,TRUE
+,New York,18119,0.713,FALSE
+,New York,7292,0.287,TRUE
+,New Zealand,9363,0.744,FALSE
+,New Zealand,3219,0.256,TRUE

@@ -1,0 +1,9 @@
+change_status,V2,V1,prop
+FALSE,Czechia,10830,0.553
+TRUE,Czechia,8764,0.447
+FALSE,Europe,63271,0.814
+TRUE,Europe,14450,0.186
+FALSE,New York,18119,0.713
+TRUE,New York,7292,0.287
+FALSE,New Zealand,9363,0.744
+TRUE,New Zealand,3219,0.256

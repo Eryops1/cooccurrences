@@ -1,0 +1,37 @@
+V1,V2,N,status_T1,sum_per_start,prop_per_trans,status_T2,change_status
+aggregated-->aggregated,Czechia,6827,aggregated,9984,0.68379407051282,aggregated,FALSE
+aggregated-->neutral,Czechia,1546,aggregated,9984,0.154847756410256,neutral,TRUE
+aggregated-->segregated,Czechia,1611,aggregated,9984,0.161358173076923,segregated,TRUE
+neutral-->aggregated,Czechia,1655,neutral,3733,0.443343155638896,aggregated,TRUE
+neutral-->neutral,Czechia,961,neutral,3733,0.25743369943745,neutral,FALSE
+neutral-->segregated,Czechia,1117,neutral,3733,0.299223144923654,segregated,TRUE
+segregated-->aggregated,Czechia,1643,segregated,5877,0.279564403607283,aggregated,TRUE
+segregated-->neutral,Czechia,1192,segregated,5877,0.202824570359027,neutral,TRUE
+segregated-->segregated,Czechia,3042,segregated,5877,0.517611026033691,segregated,FALSE
+aggregated-->aggregated,Europe,34853,aggregated,40222,0.866515837104073,aggregated,FALSE
+aggregated-->neutral,Europe,2093,aggregated,40222,0.0520361990950226,neutral,TRUE
+aggregated-->segregated,Europe,3276,aggregated,40222,0.081447963800905,segregated,TRUE
+neutral-->aggregated,Europe,2094,neutral,4896,0.427696078431373,aggregated,TRUE
+neutral-->neutral,Europe,848,neutral,4896,0.173202614379085,neutral,FALSE
+neutral-->segregated,Europe,1954,neutral,4896,0.399101307189543,segregated,TRUE
+segregated-->aggregated,Europe,3152,segregated,32603,0.0966782197957243,aggregated,TRUE
+segregated-->neutral,Europe,1881,segregated,32603,0.0576940772321566,neutral,TRUE
+segregated-->segregated,Europe,27570,segregated,32603,0.845627702972119,segregated,FALSE
+aggregated-->aggregated,New York,9472,aggregated,11974,0.791047269083013,aggregated,FALSE
+aggregated-->neutral,New York,1173,aggregated,11974,0.0979622515450142,neutral,TRUE
+aggregated-->segregated,New York,1329,aggregated,11974,0.110990479371973,segregated,TRUE
+neutral-->aggregated,New York,1124,neutral,2748,0.409024745269287,aggregated,TRUE
+neutral-->neutral,New York,702,neutral,2748,0.255458515283843,neutral,FALSE
+neutral-->segregated,New York,922,neutral,2748,0.33551673944687,segregated,TRUE
+segregated-->aggregated,New York,1665,segregated,10689,0.155767611563289,aggregated,TRUE
+segregated-->neutral,New York,1079,segregated,10689,0.100944896622696,neutral,TRUE
+segregated-->segregated,New York,7945,segregated,10689,0.743287491814014,segregated,FALSE
+aggregated-->aggregated,New Zealand,7432,aggregated,8539,0.870359526876684,aggregated,FALSE
+aggregated-->neutral,New Zealand,532,aggregated,8539,0.0623023773275559,neutral,TRUE
+aggregated-->segregated,New Zealand,575,aggregated,8539,0.0673380957957606,segregated,TRUE
+neutral-->aggregated,New Zealand,519,neutral,1043,0.497603068072867,aggregated,TRUE
+neutral-->neutral,New Zealand,255,neutral,1043,0.244487056567594,neutral,FALSE
+neutral-->segregated,New Zealand,269,neutral,1043,0.25790987535954,segregated,TRUE
+segregated-->aggregated,New Zealand,983,segregated,3000,0.327666666666667,aggregated,TRUE
+segregated-->neutral,New Zealand,341,segregated,3000,0.113666666666667,neutral,TRUE
+segregated-->segregated,New Zealand,1676,segregated,3000,0.558666666666667,segregated,FALSE
