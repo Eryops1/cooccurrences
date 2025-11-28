@@ -2,7 +2,7 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-10-30
+# Last Modified: 2025-11-28
 # Purpose: Calculate dissimilarities in co-occurrence measures between sampling
 #          periods, calculate mantel tests for influence of phylogeny and traits.
 # Output: .rds objects named "data/processed_spass.rds",
@@ -78,6 +78,14 @@ dat = dat[datasetID==cond$V1[1] & alltime==cond$N[1] |
             datasetID==cond$V1[4] & alltime==cond$N[4]]
 table(dat$alltime, dat$datasetID)
 any(is.na(dat$mean.psi)) # no NAs? good!
+
+
+# load flagged species and exclude them
+flagged_sp = gsub(".png", "", dir(paste0("maps/atlas=", dataset_id ,"_flagged_visually/")))
+flag = data.table(species = gsub(".*[0-9]_", "", flagged_sp),
+                  atlas = as.numeric(gsub(".*=|_[A-Z].*", "", flagged_sp)))
+dat = dat[!scientificName %in% flag$species,]
+
 
 # save sum occupancy probabilities for making maps later
 dat[, sum.psi_siteID:=sum(mean.psi),by=.(siteID, datasetID, endYear)]
@@ -189,7 +197,7 @@ for(i in 1:length(mat)){
 }
 names(dd) = atlas
 
-# saveRDS(dd, "data/distance_matrix_abs.rds")
+#saveRDS(dd, "data/distance_matrix_abs.rds")
 dd = readRDS("data/distance_matrix_abs.rds")
 
 
