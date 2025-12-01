@@ -1,0 +1,67 @@
+group,group_median,atlas,p_value,significance,y
+Passeriformes,,Czechia,1,"",3.74905922324884
+Accipitriformes,,Czechia,0,***,6.76757002141264
+Charadriiformes,,Czechia,0,***,2.84082785161927
+Strigiformes,,Czechia,0.014,*,1.29009944803093
+Coraciiformes,,Czechia,0.071,"",0.600402772590019
+Anseriformes,,Czechia,0.253,"",2.45232479826891
+Caprimulgiformes,,Czechia,0.025,*,0.0126038331196465
+Pelecaniformes,,Czechia,0.006,**,1.30867460935321
+Ciconiiformes,,Czechia,0.372,"",0.172109714656481
+Columbiformes,,Czechia,0.586,"",0.401266055052873
+Galliformes,,Czechia,0.002,**,0.185554965861519
+Gruiformes,,Czechia,0.103,"",0.211860030004201
+Cuculiformes,,Czechia,0.959,"",0.00969207860147974
+Piciformes,,Czechia,0.196,"",0.583234610956993
+Falconiformes,,Czechia,0.222,"",0.114670776511975
+Suliformes,,Czechia,0.017,*,1.14598635974521
+Podicipediformes,,Czechia,0.022,*,-0.0963258338956089
+Bucerotiformes,,Czechia,0.18,"",-0.167915181830579
+Passeriformes,,Europe,0,***,3.07743022908777
+Accipitriformes,,Europe,0.011,*,1.99771096420045
+Charadriiformes,,Europe,0,***,1.22752049108688
+Strigiformes,,Europe,0.048,*,0.726701914698154
+Anseriformes,,Europe,0,***,10.5005277211758
+Coraciiformes,,Europe,0.371,"",0.603337812500278
+Galliformes,,Europe,0.02,*,0.263931403774084
+Gruiformes,,Europe,0.579,"",0.784723682107395
+Caprimulgiformes,,Europe,0.121,"",0.821910480356356
+Pelecaniformes,,Europe,0,***,3.01653389466971
+Ciconiiformes,,Europe,0.084,"",0.378254177941432
+Cuculiformes,,Europe,0.703,"",0.142361801314229
+Columbiformes,,Europe,0.935,"",0.165398318624461
+Piciformes,,Europe,0.061,"",0.286852285317938
+Falconiformes,,Europe,0.538,"",0.775161684259132
+Procellariiformes,,Europe,0.089,"",-0.101412486228784
+Gaviiformes,,Europe,0.411,"",0.204608418342887
+Suliformes,,Europe,0,***,1.54776746461748
+Otidiformes,,Europe,0.049,*,-0.138354330402797
+Podicipediformes,,Europe,0.374,"",0.189832531503097
+Pterocliformes,,Europe,0.114,"",-0.0319458633513663
+Accipitriformes,,New York,0.04,*,3.1099833475137
+Charadriiformes,,New York,0.031,*,0.108023387313615
+Strigiformes,,New York,0.339,"",0.156247863973508
+Passeriformes,,New York,0.231,"",3.24447124198483
+Anseriformes,,New York,0,***,1.45876338057138
+Caprimulgiformes,,New York,0.005,**,0.0467872478366467
+Pelecaniformes,,New York,0.21,"",1.43581051431335
+Galliformes,,New York,0.171,"",-0.0636163752280672
+Cuculiformes,,New York,0.398,"",0.16249014177956
+Piciformes,,New York,0.344,"",1.34746026348095
+Columbiformes,,New York,0.749,"",0.0689289802355473
+Falconiformes,,New York,0.006,**,1.88905059455035
+Gruiformes,,New York,0.003,**,1.10282151871125
+Passeriformes,,New Zealand,0.702,"",1.4890295185667
+Galliformes,,New Zealand,0.429,"",0.48504568050424
+Charadriiformes,,New Zealand,0.075,"",1.25063006683979
+Anseriformes,,New Zealand,0.004,**,1.69781494368883
+Pelecaniformes,,New Zealand,0.306,"",0.275988355475339
+Procellariiformes,,New Zealand,0,***,1.04977971339812
+Strigiformes,,New Zealand,0.367,"",0.0454021246118142
+Psittaciformes,,New Zealand,0.31,"",2.17727166310047
+Columbiformes,,New Zealand,0,***,3.52492063824293
+Coraciiformes,,New Zealand,0.418,"",0.291850205346378
+Sphenisciformes,,New Zealand,0.774,"",3.97821004071861
+Gruiformes,,New Zealand,0.449,"",0.702641998733235
+Suliformes,,New Zealand,0.01,*,0.554005727567883
+Podicipediformes,,New Zealand,0,***,1.36065156255395
