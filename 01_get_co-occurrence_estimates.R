@@ -2,7 +2,7 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-10-27
+# Last Modified: 2025-11-28
 # Purpose: Loads raw presence absence and occupancy probability data, saves the
 #          processed data for analysis.
 # Outputs: Four .rds objects named e.g. "more_lists_atlas=5_SES_cor_scales=1_2025-06-07.rds"
@@ -31,9 +31,8 @@ theme_set(theme_classic())
 
 # Load data --------------------------------------------------------------------
 
-# chose a dataset_ids: 5(CZ), 6(NY), 17(NZ), 26(EU)
+# chose a dataset_id: 5(CZ), 6(NY), 17(NZ), 26(EU)
 dataset_id = 26
-
 files = dir(paste0('data/occ_', as.character(dataset_id)), full.names = T)
 
 tmp = list()
@@ -43,7 +42,8 @@ for(i in 1:length(files)){
   tmp2 = list()
   for(l in 1:length(org)){
     scientificName = unlist(org[[l]][[2]]$sp_name)
-    tmp_int = cbind(org[[l]][[1]], scientificName)
+    raw.occ = unlist(org[[l]][[2]]$raw.occ)
+    tmp_int = cbind(data.table(scientificName, raw.occ), org[[l]][[1]])
     setDT(tmp_int)
     tmp2[[l]] = tmp_int
   }
@@ -69,22 +69,6 @@ if(dataset_id==26){
 
   all(dat$siteID %in% grid$siteID)
   plot(grid[grid$siteID %in% dat$siteID])
-  # looks good?
-
-  # grid = vect(paste0("data/all_scales_atlas_", dataset_id, ".gpkg"))
-  # grid = grid[grid$datasetID==26,]
-  # grid = grid[grid$scalingID==1,]
-  # # build parts to remove
-  # files = dir("data", pattern = "gadm41", full.names = T)
-  # rem = lapply(files, vect)
-  # rem = vect(rem)
-  # # match projection
-  # crs(rem, proj=T) == crs(grid, proj=T)
-  # # intersect
-  # tmp = terra::intersect(grid,rem)
-  # tmp$remove = 1
-  # grid_new = merge(grid, tmp, all.x=T)
-  # grid = grid_new[is.na(grid_new$remove),]
 }
 
 # set scaling ID to 2 for the NY atlas which is the one processed for occupancy probabilities
@@ -97,9 +81,10 @@ if(dataset_id==6){
 
 
 # subset to species that occur in all time periods
-# step 1: remove all NAs
+
+## remove all NAs
 dat = na.omit(dat)
-# step2: count years with data
+## count years with data
 dat[, alltime:=length(unique(endYear)), by=.(scientificName)]
 alltime_sp = unique(dat$scientificName[dat$alltime==length(files)])
 dat <- dat[scientificName %in% alltime_sp,]
@@ -109,31 +94,63 @@ end_years = sort(unique(dat$endYear))
 scales = sort(unique(dat$scalingID))
 
 
-# some sanity checks
+# more sanity checks
 ## any species that have only NAs? should be all FALSE
 table(tapply(dat$mean.psi, dat$scientificName, function(x){all(is.na(x))}))
 # and NA values in mean.psi values (occupancy values)? should be FALSE
 any(is.na(dat$mean.psi))
 
 
-## plot map of a random species to check if everything looks ok
+
+
+
+
+
+# occupancy map quality check --------------------------------------------------------------
+
+## Quantitative occupancy probability map check
+species_to_check <- dat[
+  endYear %in% c(1, last(endYear)) &
+    sd.psi >= 0.20 &
+    mean.psi > raw.occ * 10,
+  sort(unique(scientificName))
+]
+dat[, check:=scientificName %in% species_to_check]
+
+
+
+## Visual check - plot maps
 grid = vect(paste0("data/all_scales_atlas_", dataset_id, ".gpkg")) # load atlas grid
-tmp = dat[datasetID==dataset_id & scientificName==unique(dat$scientificName)[2],] # select random species (in this case 2)
-p1 = merge(grid, tmp, by=c("datasetID", "scalingID", "siteID"), all.x=TRUE) # merge into spatial grid
 
-### presence absence data
-ggplot(st_as_sf(p1[p1$scalingID==1,]), aes(fill=pres.abs))+
-  geom_sf()+
-  ggtitle(tmp$scientificName)
-### occupancy probability data
-ggplot(st_as_sf(p1[p1$scalingID==1,]), aes(fill=mean.psi))+
-  geom_sf()+
-  ggtitle(tmp$scientificName)
+#species = species_to_check[species_to_check %in% sort(unique(dat$scientificName))]
+species =  sort(unique(dat$scientificName)) 
+for(i in 1:length(species)){
+  tmp1 = dat[datasetID==dataset_id & scientificName==species[i],] # select random species (in this case 2)
+  p1 = merge(grid, tmp1, by=c("datasetID", "scalingID", "siteID"), all.y=TRUE) # merge into spatial grid
+  p1 = st_as_sf(p1)
+  cowplot::plot_grid(nrow=2,
+      ggplot(p1, aes(fill=pres.abs))+
+        geom_sf(col=NA)+
+        ggtitle(unique(p1$scientificName), subtitle = c("", "FLAG")[as.numeric(unique(p1$scientificName) %in% species_to_check)+1])+
+        facet_grid(~endYear)+
+        theme(plot.subtitle = element_text(size = 20, color = "red")),
+      ggplot(p1, aes(fill=mean.psi))+
+        geom_sf(col=NA)+
+        ggtitle(unique(p1$scientificName))+
+        facet_grid(~endYear)
+  )
+  ggsave(filename = paste0("maps/atlas=",dataset_id, "_", species[i],".png"), width = length(unique(p1$endYear))*3.4, height=10)
+  cat(i, "\r")
+}
 
 
+####### Manual step outside R - look at maps and sort them ####################
 
-
-
+# load flagged species and exclude them
+flagged_sp = gsub(".png", "", dir(paste0("maps/atlas=", dataset_id ,"_flagged_visually/")))
+flag = data.table(species = gsub(".*[0-9]_", "", flagged_sp),
+                  atlas = as.numeric(gsub(".*=|_[A-Z].*", "", flagged_sp)))
+dat = dat[!scientificName %in% flag$species,]
 
 
 
