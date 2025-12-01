@@ -16,11 +16,12 @@
 rm(list=(ls())) # clear workspace
 library(groundhog)
 pkgs <- c("data.table",
-          "sf",
+#          "sf",
           "clootl",
           "ape",
-          "ecodist",
-          "vegan")
+#          "ecodist",
+          "vegan",
+          "cluster")
 groundhog.library(pkgs, "2025-10-25")
 
 
@@ -197,8 +198,9 @@ for(i in 1:length(mat)){
 }
 names(dd) = atlas
 
+# save time
 #saveRDS(dd, "data/distance_matrix_abs.rds")
-dd = readRDS("data/distance_matrix_abs.rds")
+#dd = readRDS("data/distance_matrix_abs.rds")
 
 
 
