@@ -22,7 +22,8 @@ pkgs = c("data.table",
           "terra",
           "sf",
           "circlize", 
-         "compositions")
+          "compositions",
+          "psych")
 groundhog.library(pkgs, "2025-10-25")
 
 theme_set(theme_classic(base_size = 9)+
@@ -31,6 +32,7 @@ theme_set(theme_classic(base_size = 9)+
             theme(axis.title.x = ggtext::element_markdown())+
             theme(axis.title.y = ggtext::element_markdown())+
             theme(legend.title = ggtext::element_markdown()))
+
 
 
 
@@ -348,7 +350,7 @@ sp = data.table(atlas = rep(c('Czechia', 'New York', 'Europe', 'New Zealand'), e
 dt = merge(dt,sp)
 
 fwrite(dt[, .(atlas, `co-occurrence_status`, sampling_period, years, N, 
-              prop, prop_per_group, prop_per_group_range, prop_change)], 
+              round(prop,3), round(prop_per_group,3), round(prop_per_group_range,3), round(prop_change,3))], 
        "output/status_stats1.csv")
 rm(d1,d2,sp)
 
@@ -360,6 +362,7 @@ rm(d1,d2,sp)
 
 tmp = unique(stat[,.(species_pair, atlas, status_T1, status_Tlast)])
 tmp[,transition:=paste(status_T1, status_Tlast, sep = "-->")]
+
 tmp2 = as.data.table(table(tmp$transition, tmp$atlas))
 tmp2[, status_T1:=gsub("-->.*", "", V1)]
 tmp2[, status_T2:=gsub(".*-->", "", V1)]
@@ -725,6 +728,8 @@ ggplot(keep, aes(x=PD_perm, fill=atlas))+
   geom_histogram(alpha=0.7)+
   geom_vline(aes(xintercept = statistic), lty=2, col="black")+
   scale_fill_startrek(guide="none")+
+  scale_color_startrek(guide="none")+
+  stat_central_tendency(type="mean", aes(col=atlas), lty=1)+
   labs(x="Mantel test score (\U03C1)", y="counts")+
   facet_grid(atlas~metric, scales="free_y")+
   geom_text(data=tab, aes(x=Mantel_r+0.01, y=y_pos, label = significance),
@@ -759,7 +764,7 @@ rm(list=ls(pattern="mantel"))
 
 
 
-# SPECIES LEVEL -------------------------------------------------------------
+s# SPECIES LEVEL -------------------------------------------------------------
 
 # get average values for individual species from all pairs
 
@@ -804,11 +809,6 @@ indiv = rbindlist(indiv)
 indiv2 = rbindlist(indiv2) 
 # same as indiv, but keeps all values per species not just the averages
 rm(indiv_int, indiv_int2)
-
-
-
-
-
 
 
 
@@ -875,7 +875,7 @@ fwrite(stat_res$stats, "output/taxonomy_permutation_stats.csv")
 
 taxplot = ggplot(stat_res$data, aes(y = Order1, x = delta_cor_obs_median, fill = atlas)) +
   geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
-  geom_boxplot(varwidth = T, outlier.alpha = 0.2) +
+  geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
   scale_fill_startrek() +
   labs(y = "", x = "species median \u0394 Spearman's \u03C1") +
   theme(legend.position = "none") +
@@ -999,8 +999,7 @@ pairwise.wilcox.test(indiv$mean.psi_sum, indiv$Primary.Lifestyle, p.adjust.metho
 
 ### range change per primary lifestyle --------------
 stat_res = permdiff(indiv, group="Primary.Lifestyle", rep=1000, metric="change_occupancy")
-fwrite(stat_res$stats, "output/change_occupancy_habitat_permutation_stats.csv")
-
+fwrite(stat_res$stats, "output/change_occupancy_primary_lifestyle_permutation_stats.csv")
 ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = change_occupancy, fill = atlas)) +
   geom_vline(data=stat_res$stats, aes(xintercept=group_median), col="grey")+
   geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
@@ -1015,6 +1014,86 @@ ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = change_occupancy, fill = at
             hjust = 0,
             size = 4)
 ggsave(paste0("figures/", "occupancy_change_per_lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+
+
+stat_res = permdiff(indiv, group="Order1", rep=1000, metric="change_occupancy")
+fwrite(stat_res$stats, "output/change_occupancy_order_permutation_stats.csv")
+taxplot_occ = ggplot(stat_res$data, aes(y = Order1, x = change_occupancy, fill = atlas)) +
+  geom_vline(data=stat_res$stats, aes(xintercept=group_median), col="grey")+
+  geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
+  scale_fill_startrek()+
+  scale_x_continuous(trans="log1p")+
+  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  theme(legend.position = "none") +
+  facet_wrap(~atlas, ncol=4, scales="free_x") +
+  geom_text(data = stat_res$stats,
+            aes(x = y, y = group, label = significance),
+            inherit.aes = FALSE,
+            hjust = 0,
+            size = 4)
+#ggsave(paste0("figures/", "occupancy_change_per_order.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+
+
+stat_res = permdiff(indiv, group="Habitat", rep=1000, metric="change_occupancy")
+fwrite(stat_res$stats, "output/change_occupancy_habitat_permutation_stats.csv")
+habplot_occ = ggplot(stat_res$data, aes(y = Habitat, x = change_occupancy, fill = atlas)) +
+  geom_vline(data=stat_res$stats, aes(xintercept=group_median), col="grey")+
+  geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
+  scale_fill_startrek()+
+  scale_x_continuous(trans="log1p")+
+  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  theme(legend.position = "none") +
+  facet_wrap(~atlas, ncol=4, scales="free_x") +
+  geom_text(data = stat_res$stats,
+            aes(x = y, y = group, label = significance),
+            inherit.aes = FALSE,
+            hjust = 0,
+            size = 4)
+#ggsave(paste0("figures/", "occupancy_change_per_habitat.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+
+
+stat_res = permdiff(indiv, group="Trophic.Niche", rep=1000, metric="change_occupancy")
+fwrite(stat_res$stats, "output/change_occupancy_trophic_niche_permutation_stats.csv")
+trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupancy, fill = atlas)) +
+  geom_vline(data=stat_res$stats, aes(xintercept=group_median), col="grey")+
+  geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
+  scale_fill_startrek()+
+  scale_x_continuous(trans="log1p")+
+  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  theme(legend.position = "none") +
+  facet_wrap(~atlas, ncol=4, scales="free_x") +
+  geom_text(data = stat_res$stats,
+            aes(x = y, y = group, label = significance),
+            inherit.aes = FALSE,
+            hjust = 0,
+            size = 4)
+#ggsave(paste0("figures/", "occupancy_change_per_trophic_niche.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+
+
+
+plot_grid(taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a)", "b)", "c)"),  
+          label_fontface = "plain", label_size = 10, rel_heights = c(65, 40, 45))
+ggsave(paste0("figures/", "figS10.png"), width=200, height = 65+40+45, unit="mm", bg="white", dpi=300)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # same but for presence absence
 # stat_res = permdiff(indiv, group="Primary.Lifestyle", rep=1000, metric="change_pres.abs")
