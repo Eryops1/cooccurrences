@@ -146,34 +146,6 @@ dataset_id = unique(fin$dataset_id)
 grid = lapply(paste0("data/all_scales_atlas_", dataset_id, ".gpkg"), vect)
 grid = vect(grid)
 
-# grid cell sizes 
-# get biggest cell in each dataset
-cond <- (grid$scalingID == 1 & grid$datasetID %in% c(5,17,26)) |
-        (grid$scalingID == 2 & grid$datasetID == 6)
-tmp = grid[cond]
-max_siteID =  tapply(tmp, tmp$datasetID, function(x){x$siteID[which.max(expanse(x))]})
-Mode <- function(x) {
-  ux <- unique(x)
-  ux[which.max(tabulate(match(x, ux)))]
-}
-Mode(expanse(tmp[tmp$datasetID==26,]))
-mapview::mapview(tmp[tmp$datasetID==26], zcol="siteID")
-grid_size = data.table(atlas = names(max_siteID),
-                       lat_dist = NA, 
-                       lon_dist = NA)
-for(i in 1:length(max_siteID)){
-  p <- tmp[tmp$datasetID==names(max_siteID)[i] & tmp$siteID==max_siteID[i],]
-  bb <- ext(p)
-  pt <- vect(data.frame(lon=c(bb$xmin, bb$xmin), lat=c(bb$ymin, bb$ymax)), crs=crs(p))
-  grid_size$lat_dist[i] = terra::distance(pt) / 1000 # in km
-  pt <- vect(data.frame(lon=c(bb$xmin, bb$xmax), lat=c(bb$ymin, bb$ymin)), crs=crs(p))
-  grid_size$lon_dist[i] = terra::distance(pt) / 1000 # in km
-}
-grid_size
-
-
-
-
 dat = readRDS("data/sum_mean_psi_for_maps.rds")
 
 shape_names = paste0("data/", c("europe", "czechia", "nz", "new_york_state"), ".gpkg")
