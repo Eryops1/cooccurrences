@@ -145,6 +145,35 @@ fin$atlas <- atlas_names[as.character(fin$dataset_id)]
 dataset_id = unique(fin$dataset_id)
 grid = lapply(paste0("data/all_scales_atlas_", dataset_id, ".gpkg"), vect)
 grid = vect(grid)
+
+# grid cell sizes 
+# get biggest cell in each dataset
+cond <- (grid$scalingID == 1 & grid$datasetID %in% c(5,17,26)) |
+        (grid$scalingID == 2 & grid$datasetID == 6)
+tmp = grid[cond]
+max_siteID =  tapply(tmp, tmp$datasetID, function(x){x$siteID[which.max(expanse(x))]})
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+Mode(expanse(tmp[tmp$datasetID==26,]))
+mapview::mapview(tmp[tmp$datasetID==26], zcol="siteID")
+grid_size = data.table(atlas = names(max_siteID),
+                       lat_dist = NA, 
+                       lon_dist = NA)
+for(i in 1:length(max_siteID)){
+  p <- tmp[tmp$datasetID==names(max_siteID)[i] & tmp$siteID==max_siteID[i],]
+  bb <- ext(p)
+  pt <- vect(data.frame(lon=c(bb$xmin, bb$xmin), lat=c(bb$ymin, bb$ymax)), crs=crs(p))
+  grid_size$lat_dist[i] = terra::distance(pt) / 1000 # in km
+  pt <- vect(data.frame(lon=c(bb$xmin, bb$xmax), lat=c(bb$ymin, bb$ymin)), crs=crs(p))
+  grid_size$lon_dist[i] = terra::distance(pt) / 1000 # in km
+}
+grid_size
+
+
+
+
 dat = readRDS("data/sum_mean_psi_for_maps.rds")
 
 shape_names = paste0("data/", c("europe", "czechia", "nz", "new_york_state"), ".gpkg")
@@ -764,7 +793,7 @@ rm(list=ls(pattern="mantel"))
 
 
 
-s# SPECIES LEVEL -------------------------------------------------------------
+# SPECIES LEVEL -------------------------------------------------------------
 
 # get average values for individual species from all pairs
 
@@ -926,6 +955,7 @@ trophplot = ggplot(stat_res$data, aes(y = Trophic.Niche, x = delta_cor_obs_media
 
 
 ### PLOT
+set_null_device("png") # this prevents the space after unicode to dissapear
 plot_grid(taxplot, habplot, trophplot, ncol=1, labels = c("a)", "b)", "c)"),  
           label_fontface = "plain", label_size = 10, rel_heights = c(65, 40, 45))
 ggsave(paste0("figures/", "figS5.png"), width=200, height = 65+40+45, unit="mm", bg="white", dpi=300)
@@ -955,8 +985,9 @@ range_change$species = range_change$scientificName
 range_change[, pres.abs_sum_T1:=pres.abs_sum[endYear==1], by=.(atlas, species)]
 range_change[, occupancy_sum_T1:=mean.psi_sum[endYear==1], by=.(atlas, species)]
 
-indiv = merge(indiv, range_change[,.(species, atlas, change_occupancy, change_pres.abs, 
-                                     pres.abs_sum, mean.psi_sum, pres.abs_sum_T1, occupancy_sum_T1)], by=c("atlas", "species"), 
+indiv = merge(indiv, unique(range_change[,.(species, atlas, change_occupancy, change_pres.abs, 
+                                            pres.abs_sum_T1, occupancy_sum_T1)]),
+              by=c("atlas", "species"), 
               all.x=TRUE)
 
 # use log ratio for change occupancy
@@ -982,15 +1013,24 @@ tapply(indiv, indiv$atlas, function(x){cor.test(x$delta_cor_obs_median, as.numer
 
 ## general range size within Primary Lifestyle groups (sum occupancy all cells T1) ----
 
-ggplot(indiv, aes(y=Primary.Lifestyle, x=occupancy_sum_T1, fill=atlas))+
-  geom_boxplot(varwidth = F)+
-  scale_fill_startrek(guide="none")+
-  labs(y="", x="Sum of occupancy probabilites in T1")+
-  facet_wrap(~atlas, ncol=4)
+range_diff_stats = permdiff(indiv, group="Primary.Lifestyle", rep=1000, metric="occupancy_sum_T1")
+fwrite(range_diff_stats$stats, "output/range_permutation_stats.csv")
+ggplot(range_diff_stats$data, aes(y = Primary.Lifestyle, x = occupancy_sum_T1, fill = atlas)) +
+  geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
+  geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
+  scale_fill_startrek() +
+  labs(y = "", x = "Sum of occupancy probabilites in T1") +
+  theme(legend.position = "none") +
+  facet_grid(~atlas, scales="free")+
+  geom_text(data = range_diff_stats$stats, aes(x = y, y = group, label = significance),
+            hjust = 0, size = 4)
 ggsave(paste0("figures/", "sum_occupancy_T1_lifestyle.png"), units="mm", width=180, height = 40, bg="white", dpi = 300)
 
-tapply(indiv, indiv$atlas, function(x){pairwise.wilcox.test(x$mean.psi_sum, x$Primary.Lifestyle, p.adjust.method = "fdr")})
-pairwise.wilcox.test(indiv$mean.psi_sum, indiv$Primary.Lifestyle, p.adjust.method = "fdr")
+# groups should be compared among each other and not betwen each other. permutation test
+# tmp = tapply(indiv, indiv$atlas, function(x){pairwise.wilcox.test(x$occupancy_sum_T1, x$Primary.Lifestyle, p.adjust.method = "fdr")})
+# lapply(tmp, function(x){as.data.table(x$p.value, keep.rownames = TRUE)})
+
+pairwise.wilcox.test(indiv$occupancy_sum_T1, indiv$Primary.Lifestyle, p.adjust.method = "fdr")
 
 
 
@@ -1000,7 +1040,7 @@ pairwise.wilcox.test(indiv$mean.psi_sum, indiv$Primary.Lifestyle, p.adjust.metho
 ### range change per primary lifestyle --------------
 stat_res = permdiff(indiv, group="Primary.Lifestyle", rep=1000, metric="change_occupancy")
 fwrite(stat_res$stats, "output/change_occupancy_primary_lifestyle_permutation_stats.csv")
-ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = change_occupancy, fill = atlas)) +
+primary_lifestyleplot_occ = ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = change_occupancy, fill = atlas)) +
   geom_vline(data=stat_res$stats, aes(xintercept=group_median), col="grey")+
   geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
   scale_fill_startrek()+
@@ -1071,9 +1111,9 @@ trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupanc
 
 
 
-plot_grid(taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a)", "b)", "c)"),  
-          label_fontface = "plain", label_size = 10, rel_heights = c(65, 40, 45))
-ggsave(paste0("figures/", "figS10.png"), width=200, height = 65+40+45, unit="mm", bg="white", dpi=300)
+plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a)", "b)", "c)", "d)"),  
+          label_fontface = "plain", label_size = 10, rel_heights = c(30, 70, 40, 45))
+ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45, unit="mm", bg="white", dpi=300)
 
 
 
@@ -1133,30 +1173,45 @@ chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, mean
              by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
 chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, mean.psi_sum)]), all.x=TRUE, 
              by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
-chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
-             by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
-chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
-             by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
+# chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
+#              by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
+# chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
+#              by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
 
 # mark pairs with species  < 50 grids (this is based on presence absence records to keep it straight forward)
 chan[, small_ranges:= pres.abs_sum.x<50 | pres.abs_sum.y<50, ]
 # mark pairs with unbalanced range ratios
-chan[,range_ratio_pres.abs:=min(c(mean.psi_sum.x,mean.psi_sum.y))/max(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
+chan[,range_ratio_mean.psi:=min(c(mean.psi_sum.x,mean.psi_sum.y))/max(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
 # the minimum number of occ cells in a pair (both species)
 chan[,min_pair_range:=min(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
 
 
 ### plot 
-ggplot(unique(chan[, .(delta_cor_obs, range_ratio_pres.abs, atlas, min_pair_range)]), 
-       aes(y=delta_cor_obs, x=range_ratio_pres.abs, col=min_pair_range))+
+tmp = unique(chan[, .(delta_cor_obs, range_ratio_mean.psi, atlas, min_pair_range)])
+ggplot(tmp, aes(y=abs(delta_cor_obs), x=range_ratio_mean.psi, col=min_pair_range))+
   geom_point(alpha=0.05)+
-  geom_smooth()+
-  labs(x="range size ratio", y="\U0394 Spearman's \U03C1")+
+  geom_smooth(data = tmp[range_ratio_mean.psi<0.25,])+
+  geom_smooth(data = tmp[range_ratio_mean.psi>= 0.25 & range_ratio_mean.psi<0.5,])+
+  geom_smooth(data = tmp[range_ratio_mean.psi>= 0.5 & range_ratio_mean.psi<0.75,])+
+  geom_smooth(data = tmp[range_ratio_mean.psi>=0.75,])+
+  labs(x="range size ratio", y="Absolute \U0394 Spearman's \U03C1")+
   scale_color_viridis_c(name = "Sum occupancy probablity\n (smaller species)")+
   facet_wrap("atlas")+
-  theme(legend.position = "bottom", legend.key.width = unit(12, "mm"))
+  stat_cor(data = tmp[range_ratio_mean.psi<0.25,], method = "spearman", size=2, p.accuracy = 0.001, cor.coef.name = "rho",
+           label.sep = "\n", col="black",label.x = 0.05)+
+  stat_cor(data = tmp[range_ratio_mean.psi>= 0.25 & range_ratio_mean.psi<0.5,], method = "spearman", size=2, p.accuracy = 0.001, cor.coef.name = "rho",
+           label.sep = "\n", col="black",label.x = 0.3)+
+  stat_cor(data = tmp[range_ratio_mean.psi>= 0.5 & range_ratio_mean.psi<0.75,], method = "spearman", size=2, p.accuracy = 0.001, cor.coef.name = "rho",
+           label.sep = "\n", col="black",label.x = 0.55)+
+  stat_cor(data = tmp[range_ratio_mean.psi>=0.75,], method = "spearman", size=2, p.accuracy = 0.001, cor.coef.name = "rho",
+           label.sep = "\n", col="black",label.x = 0.8)+
+  theme(legend.position = "bottom", legend.key.width = unit(12, "mm"))+
+  geom_vline(xintercept = c(0.25,0.5,0.75), col="grey")
 ggsave(paste0("figures/", "delta_cor_obs_VS_range_size_ratio.png"), width=6.5, height = 6, bg="white")
 
+# quantify variation:
+cor.test(abs(tmp$delta_cor_obs), tmp$range_ratio_mean.psi, method="s")
+tapply(tmp, tmp$atlas, function(x){cor.test(x$delta_cor_obs, x$range_ratio_mean.psi, method='s')})
 
 
 # get Fig 4 for more range_ratio>=0.15 & small_ranges==FALSE (SI figure)
