@@ -1145,15 +1145,15 @@ chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, mean
              by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
 chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, mean.psi_sum)]), all.x=TRUE, 
              by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
-# chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
-#              by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
-# chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
-#              by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
+chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
+              by.x=c("sp1", "atlas"), by.y=c("scientificName", "atlas"))
+chan = merge(chan, unique(range_change[endYear==1, .(atlas, scientificName, pres.abs_sum)]), all.x=TRUE, 
+             by.x=c("sp2", "atlas"), by.y=c("scientificName", "atlas"))
 
-# mark pairs with species  < 50 grids (this is based on presence absence records to keep it straight forward)
+# mark pairs with species  < 50 grids (this is based on presence absence records in T1 to keep it straight forward)
 chan[, small_ranges:= pres.abs_sum.x<50 | pres.abs_sum.y<50, ]
 # mark pairs with unbalanced range ratios
-chan[,range_ratio_mean.psi:=min(c(mean.psi_sum.x,mean.psi_sum.y))/max(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
+chan[,range_ratio_mean.psi:=min(c(mean.psi_sum.x, mean.psi_sum.y))/max(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
 # the minimum number of occ cells in a pair (both species)
 chan[,min_pair_range:=min(c(mean.psi_sum.x,mean.psi_sum.y)), by=.(species_pair, atlas)]
 
@@ -1187,7 +1187,7 @@ tapply(tmp, tmp$atlas, function(x){cor.test(x$delta_cor_obs, x$range_ratio_mean.
 
 
 # get Fig 4 for more range_ratio>=0.15 & small_ranges==FALSE (SI figure)
-sub = chan[range_ratio_pres.abs>=0.2 & small_ranges==FALSE,]
+sub = chan[range_ratio_mean.psi>=0.2 & small_ranges==FALSE,]
 
 
 # get average changes for species, only from balanced pairs
@@ -1270,7 +1270,8 @@ indiv2[, max_IQR:=quantile(delta_cor_obs, 0.75), by=.(species, atlas)]
 
 ggplot(indiv2, aes(xmin = min_range, xmax = max_range, y=rank))+
   geom_linerange(col="grey")+
-  geom_linerange(aes(xmin = min_IQR, xmax = max_IQR), col="grey20")+
+  geom_linerange(aes(xmin = min_IQR, xmax = max_IQR, col=atlas))+
+  scale_fill_startrek() +
   geom_vline(xintercept=0, col="white")+
   geom_point(aes(x=median_delta_cor_obs.x), col="red", size=0.5)+
   labs(y="species ordered by median co-occurrence change", x="\U0394 Spearman's \U03C1")+

@@ -1,0 +1,21 @@
+group,group_median,atlas,p_value,significance,y
+Generalist,,Czechia,0.535,"",612.766457331317
+Insessorial,,Czechia,0.013,*,612.732311909011
+Terrestrial,,Czechia,0.507,"",612.634847574174
+Aquatic,,Czechia,0.028,*,588.549229118371
+Aerial,,Czechia,0.316,"",612.809075027604
+Generalist,,Europe,0.435,"",2403.65427278126
+Insessorial,,Europe,0.001,**,2403.97011214954
+Terrestrial,,Europe,0.711,"",2430.89123442585
+Aquatic,,Europe,0.135,"",2308.1725957406
+Aerial,,Europe,0.338,"",2405.67315780611
+Aerial,,New York,0.846,"",1350.564222814
+Generalist,,New York,0.179,"",1360.3721361363
+Terrestrial,,New York,0.643,"",1359.83673717329
+Insessorial,,New York,0.346,"",1356.77246447921
+Aquatic,,New York,0.118,"",1228.88855072675
+Generalist,,New Zealand,0.144,"",2560.72810614378
+Insessorial,,New Zealand,0.002,**,2423.03069008345
+Terrestrial,,New Zealand,0.021,*,2434.38810684781
+Aquatic,,New Zealand,0.522,"",1953.23747460582
+Aerial,,New Zealand,0.376,"",2329.95011655266
