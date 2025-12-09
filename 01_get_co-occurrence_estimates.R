@@ -32,7 +32,7 @@ theme_set(theme_classic())
 # Load data --------------------------------------------------------------------
 
 # chose a dataset_id: 5(CZ), 6(NY), 17(NZ), 26(EU)
-dataset_id = 26
+dataset_id = 5
 files = dir(paste0('data/occ_', as.character(dataset_id)), full.names = T)
 
 tmp = list()
@@ -151,6 +151,7 @@ flagged_sp = gsub(".png", "", dir(paste0("maps/atlas=", dataset_id ,"_flagged_vi
 flag = data.table(species = gsub(".*[0-9]_", "", flagged_sp),
                   atlas = as.numeric(gsub(".*=|_[A-Z].*", "", flagged_sp)))
 dat = dat[!scientificName %in% flag$species,]
+
 
 
 
