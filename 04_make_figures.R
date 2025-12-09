@@ -491,7 +491,7 @@ zhist = ggplot(fig_hist[over==TRUE,], aes(x=cor_ses))+
   scale_fill_manual(name = "", values = c("#1398E9", "grey", "#E96513"), labels=c("segregated", "neutral", "aggregated"))+
   scale_color_startrek(guide="none")+
   labs(y="count", x="Co-occurrence (_Z_-score Spearman's \U03C1)")+
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
 
 ### stats -----
 psych::describeBy(data=fin, cor_ses ~ atlas + time_bin, mat=TRUE, digits=2)
@@ -510,7 +510,8 @@ corscat = ggplot(fig_hist, aes(x=cor_obs, y=cor_ses, col=atlas))+
            label.sep = "\n", p.accuracy = 0.001, cor.coef.name = "rho", col="black")+
   facet_grid(time_bin~atlas)+
   scale_color_startrek(guide="none")+
-  labs(y="*Z*-score Spearman's \U03C1", x="Spearman's \U03C1")
+  labs(y="*Z*-score Spearman's \U03C1", x="Spearman's \U03C1")+
+  theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
 
 plot_grid(zhist, corscat, ncol=1, labels = c("a)", "b)"), label_fontface = "plain", label_size = 10)
 ggsave(paste0("figures/", "figS1.png"), width=6, height = 6, bg="white")
@@ -1017,7 +1018,7 @@ primary_lifestyleplot_occ = ggplot(stat_res$data, aes(y = Primary.Lifestyle, x =
   geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
   scale_fill_startrek()+
   scale_x_continuous(trans="log1p")+
-  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  labs(y = "", x = "\U0394 occupancy") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol=4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -1035,7 +1036,7 @@ taxplot_occ = ggplot(stat_res$data, aes(y = Order1, x = change_occupancy, fill =
   geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
   scale_fill_startrek()+
   scale_x_continuous(trans="log1p")+
-  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  labs(y = "", x = "\U0394 occupancy") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol=4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -1053,7 +1054,7 @@ habplot_occ = ggplot(stat_res$data, aes(y = Habitat, x = change_occupancy, fill 
   geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
   scale_fill_startrek()+
   scale_x_continuous(trans="log1p")+
-  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  labs(y = "", x = "\U0394 occupancy") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol=4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -1071,7 +1072,7 @@ trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupanc
   geom_boxplot(varwidth = F, outlier.alpha = 0.2)+
   scale_fill_startrek()+
   scale_x_continuous(trans="log1p")+
-  labs(y = "", x = "\U0394 occupancy relative to 1^st^ sampling period") +
+  labs(y = "", x = "\U0394 occupancy") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol=4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -1085,7 +1086,7 @@ trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupanc
 
 plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a)", "b)", "c)", "d)"),  
           label_fontface = "plain", label_size = 10, rel_heights = c(30, 70, 40, 45))
-ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45, unit="mm", bg="white", dpi=300)
+ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45+10, unit="mm", bg="white", dpi=300)
 
 
 
