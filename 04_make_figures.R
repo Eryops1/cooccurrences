@@ -122,7 +122,7 @@ permdiff = function(x, group, rep = 1000, metric) {
   stat_res$y = y_pos
   return(list(data = subx, stats = stat_res))
 }
-
+set.seed(123)
 
 
 
