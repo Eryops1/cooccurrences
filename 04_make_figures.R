@@ -1271,9 +1271,9 @@ indiv2[, max_IQR:=quantile(delta_cor_obs, 0.75), by=.(species, atlas)]
 ggplot(indiv2, aes(xmin = min_range, xmax = max_range, y=rank))+
   geom_linerange(col="grey")+
   geom_linerange(aes(xmin = min_IQR, xmax = max_IQR, col=atlas))+
-  scale_fill_startrek() +
+  scale_color_startrek(guide="none") +
   geom_vline(xintercept=0, col="white")+
-  geom_point(aes(x=median_delta_cor_obs.x), col="red", size=0.5)+
+  geom_point(aes(x=median_delta_cor_obs.x), col="black", size=0.5)+
   labs(y="species ordered by median co-occurrence change", x="\U0394 Spearman's \U03C1")+
   facet_wrap('atlas', scales="free_y")
 
