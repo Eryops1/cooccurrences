@@ -54,10 +54,39 @@ Following is a list of files included in the repository:
 
 ### Data and files included
 
-file name                          |  description | included?
------------------------------------|--------------|-----------
-01_get_co-occurrence_estimates.R   |     bla     | no
-02_get_dissimilarities.R
-03_get_changes_in_co_occurrences.R
-04_make_figures.R
-05_figure5.R
+|file name                          |  description  | 
+|-----------------------------------:|--------------|
+|SCRIPTS                            |               | 
+|01_get_co-occurrence_estimates.R   | Loads occupancy probability data, calculates co-occurrence metrics, save processed data for analysis |
+|02_get_dissimilarities.R           | Calculate Mantel tests for influence of phylogeny and traits |
+|03_get_changes_in_co_occurrences.R | Calculate changes between sampling periods, save the processed data for analysis |
+|04_make_figures.R                  | Make figures, get stats for differences between e.g. taxonpomic groups |
+|05_figure5.R                       | Do the math for schematic figure 5|
+|DATA                               |               |             |
+| all_scales_atlas_17.gpkg          | spatial grids for New Zealand atlas |
+| all_scales_atlas_26.gpkg          | spatial grids for Europe atlas |
+| all_scales_atlas_5.gpkg           | spatial grids for Czech atlas |
+| all_scales_atlas_6.gpkg           | spatial grids for New York atlas |
+| czechia.gpkg                      | Czechia outline shapefile | 
+| europe.gpkg                       | Europe outline shapefile | 
+| new_york_state.gpkg               | New York State outline shapefile | 
+| nz.gpkg                           | New Zealand outline shapefile |
+| braycurtis.rds                    | Bray-Curtis dissimilarities species level | 
+| mantel_results.rds                | atlas level mantel test results | 
+| AVONET1_BirdLife.csv  | | |
+processed_spass.rds
+range_change.rds
+sum_mean_psi_for_maps.rds
+
+more_lists_atlas=17_SES_cor_scales=1_2025-11-28.rds
+more_lists_atlas=5_SES_cor_scales=1_2025-11-28.rds
+more_lists_atlas=6_SES_cor_scales=2_2025-11-28.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_1.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_2.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_3.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_4.rds
+|OUTPUT | | |
+| | csv files with stats from permutation and mantel tests | |
+|-----------------------------------|--------------|-----------
+
+

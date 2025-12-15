@@ -403,21 +403,104 @@ data repository is provided in the manuscript file.</p>
 <div id="data-and-files-included" class="section level3">
 <h3>Data and files included</h3>
 <table>
+<colgroup>
+<col width="72%" />
+<col width="28%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th>file name</th>
+<th align="right">file name</th>
 <th>description</th>
-<th>included?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>01_get_co-occurrence_estimates.R</td>
-<td>bla</td>
-<td>no</td>
+<td align="right">SCRIPTS</td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="right">01_get_co-occurrence_estimates.R</td>
+<td>Loads occupancy probability data, calculates co-occurrence metrics,
+save processed data for analysis</td>
+</tr>
+<tr class="odd">
+<td align="right">02_get_dissimilarities.R</td>
+<td>Calculate Mantel tests for influence of phylogeny and traits</td>
+</tr>
+<tr class="even">
+<td align="right">03_get_changes_in_co_occurrences.R</td>
+<td>Calculate changes between sampling periods, save the processed data
+for analysis</td>
+</tr>
+<tr class="odd">
+<td align="right">04_make_figures.R</td>
+<td>Make figures, get stats for differences between e.g. taxonpomic
+groups</td>
+</tr>
+<tr class="even">
+<td align="right">05_figure5.R</td>
+<td>Do the math for schematic figure 5</td>
+</tr>
+<tr class="odd">
+<td align="right">DATA</td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="right">all_scales_atlas_17.gpkg</td>
+<td>spatial grids for New Zealand atlas</td>
+</tr>
+<tr class="odd">
+<td align="right">all_scales_atlas_26.gpkg</td>
+<td>spatial grids for Europe atlas</td>
+</tr>
+<tr class="even">
+<td align="right">all_scales_atlas_5.gpkg</td>
+<td>spatial grids for Czech atlas</td>
+</tr>
+<tr class="odd">
+<td align="right">all_scales_atlas_6.gpkg</td>
+<td>spatial grids for New York atlas</td>
+</tr>
+<tr class="even">
+<td align="right">czechia.gpkg</td>
+<td>Czechia outline shapefile</td>
+</tr>
+<tr class="odd">
+<td align="right">europe.gpkg</td>
+<td>Europe outline shapefile</td>
+</tr>
+<tr class="even">
+<td align="right">new_york_state.gpkg</td>
+<td>New York State outline shapefile</td>
+</tr>
+<tr class="odd">
+<td align="right">nz.gpkg</td>
+<td>New Zealand outline shapefile</td>
+</tr>
+<tr class="even">
+<td align="right">braycurtis.rds</td>
+<td>Bray-Curtis dissimilarities species level</td>
+</tr>
+<tr class="odd">
+<td align="right">mantel_results.rds</td>
+<td>atlas level mantel test results</td>
+</tr>
+<tr class="even">
+<td align="right">AVONET1_BirdLife.csv</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<p>processed_spass.rds range_change.rds sum_mean_psi_for_maps.rds</p>
+<p>more_lists_atlas=17_SES_cor_scales=1_2025-11-28.rds
+more_lists_atlas=5_SES_cor_scales=1_2025-11-28.rds
+more_lists_atlas=6_SES_cor_scales=2_2025-11-28.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_1.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_2.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_3.rds
+more_lists_atlas=26_SES_cor_scales=1_2025-11-28_chunk_4.rds |OUTPUT | |
+| | | csv files with stats from permutation and mantel tests | |
+|———————————–|————–|———–</p>
 </div>
 </div>
 </div>
