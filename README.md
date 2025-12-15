@@ -3,33 +3,11 @@ This repository contains the R-code and processed data for data processing and a
 our manuscript _Large-scale avian co-occurrence stability over time_. 
 
 
-## Abstract 
-Past decades have seen changes in species abundances, distributions, and species
-composition, alongside environmental changes. Given this omnipresent sense of
-change, we expect most facets of biodiversity to also be dynamic. One such facet
-is co-occurrence among species, but we know little about its temporal change,
-even though it may indicate disruptions of established species interactions,
-dispersal barriers, or shared niches.
-
-Studies of biodiversity dynamics in recent decades have shown changes in
-community composition, yet the exact nature of how species assemblages change
-remains unclear. Given the commonly observed temporal community composition
-turnover and environmental changes, we expected to see changes in the
-co-occurrences among species.
-
+## Abstract (shortened)
 Focusing on birds, we analyzed co-occurrences among species pairs using four
 large-scale datasets covering Czechia, Europe, New York State, and New Zealand.
 Each dataset covers approx. 30 years, offering a unique temporal view on
 co-occurrences. 
-
-Surprisingly, we found that bird co-occurrence patterns remained
-remarkably stable through time. Changes in co-occurrences showed no tendency
-toward positive or negative values and did not correspond with phylogenetic or
-functional distances among species pairs, nor with shifts in their range sizes.
-In addition, the composition of co-occurrence values within entire groups of
-co-occurring species showed little change over time. There was a mild shift
-towards more co-occurrence in aquatic species, and less in forest-associated
-species. 
 
 Overall, we show that most species maintain their co-occurrences over
 decades, suggesting that co-occurring species show comparable reactions to
