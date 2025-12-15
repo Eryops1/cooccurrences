@@ -1,4 +1,4 @@
-# Script: 03_get_dissimilarities.R
+# Script: 02_get_dissimilarities.R
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1

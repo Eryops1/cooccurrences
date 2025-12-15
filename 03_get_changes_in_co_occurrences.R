@@ -1,4 +1,4 @@
-# Script: 02_get_changes_in_co-occurrences.R
+# Script: 03_get_changes_in_co-occurrences.R
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
