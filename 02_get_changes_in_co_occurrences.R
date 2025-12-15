@@ -2,10 +2,8 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-11-28
 # Purpose: Loads co-occurrence estimates, gets changes between sampling periods
 #          incl null model estimates, saves the processed data for analysis.
-# Output: .rds object named "data/processed_spass.rds"
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
 #        Runs parts in parallel, tested for linux should work 

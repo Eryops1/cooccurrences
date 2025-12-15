@@ -2,12 +2,8 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-11-28
 # Purpose: Calculate dissimilarities in co-occurrence measures between sampling
 #          periods, calculate mantel tests for influence of phylogeny and traits.
-# Output: .rds objects named "data/processed_spass.rds",
-#          "sum_mean_psi_for_maps.rds", "range_change.rds", "mantel_results.rds",
-#          "braycurtis.rds"
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
 

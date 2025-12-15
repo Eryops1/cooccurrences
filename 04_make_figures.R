@@ -2,9 +2,7 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-11-19
 # Purpose: Make figures, get stats.
-# Output: Figures (ong and svg), tables (csv) 
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while
 #         

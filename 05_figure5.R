@@ -2,7 +2,6 @@
 # Author: Melanie Tietje
 # Email: tietje@fzp.czu.cz
 # GitHub: @Eryops1
-# Last Modified: 2025-11-29
 # Purpose: Do the math for schematic figure 5.
 # Notes: groundhog will ensure the exact same R packages will be used and create
 #        a library on first run, which might take a while.
