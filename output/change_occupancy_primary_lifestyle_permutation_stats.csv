@@ -1,21 +1,21 @@
 group,group_median,atlas,p_value,significance,y
-Generalist,,Czechia,0.578,"",1.73008529602814
-Insessorial,,Czechia,0.556,"",1.29009944803093
-Terrestrial,,Czechia,0.763,"",3.74905922324884
-Aquatic,,Czechia,0.03,*,1.63638091979314
-Aerial,,Czechia,0.463,"",6.76757002141264
-Generalist,,Europe,0.09,"",10.5005277211758
-Insessorial,,Europe,0.567,"",2.45702399340065
-Terrestrial,,Europe,0.015,*,4.46932805627854
-Aquatic,,Europe,0.243,"",1.54776746461748
-Aerial,,Europe,0.246,"",1.80967835963329
-Aerial,,New York,0.918,"",1.88905059455035
-Generalist,,New York,0.211,"",3.1099833475137
-Terrestrial,,New York,0.237,"",3.24447124198483
+Generalist,,Czechia,0.6,"",1.73008529602814
+Insessorial,,Czechia,0.553,"",1.29009944803093
+Terrestrial,,Czechia,0.752,"",3.74905922324884
+Aquatic,,Czechia,0.027,*,1.63638091979314
+Aerial,,Czechia,0.48,"",6.76757002141264
+Generalist,,Europe,0.102,"",10.5005277211758
+Insessorial,,Europe,0.593,"",2.45702399340065
+Terrestrial,,Europe,0.009,**,4.46932805627854
+Aquatic,,Europe,0.251,"",1.54776746461748
+Aerial,,Europe,0.237,"",1.80967835963329
+Aerial,,New York,0.912,"",1.88905059455035
+Generalist,,New York,0.188,"",3.1099833475137
+Terrestrial,,New York,0.236,"",3.24447124198483
 Insessorial,,New York,0.022,*,2.23222017604611
-Aquatic,,New York,0.002,**,1.3186618445384
-Generalist,,New Zealand,0.378,"",0.863368794412165
-Insessorial,,New Zealand,0.496,"",2.17727166310047
-Terrestrial,,New Zealand,0.715,"",3.52492063824293
-Aquatic,,New Zealand,0.075,"",3.97821004071861
-Aerial,,New Zealand,0.219,"",1.4890295185667
+Aquatic,,New York,0,***,1.3186618445384
+Generalist,,New Zealand,0.386,"",0.863368794412165
+Insessorial,,New Zealand,0.517,"",2.17727166310047
+Terrestrial,,New Zealand,0.694,"",3.52492063824293
+Aquatic,,New Zealand,0.063,"",3.97821004071861
+Aerial,,New Zealand,0.217,"",1.4890295185667

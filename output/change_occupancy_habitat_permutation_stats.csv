@@ -1,36 +1,36 @@
 group,group_median,atlas,p_value,significance,y
-Forest,,Czechia,0.855,"",1.29009944803093
-Wetland,,Czechia,0.01,*,2.84082785161927
-Shrubland,,Czechia,0.717,"",1.73008529602814
-Grassland,,Czechia,0.171,"",3.74905922324884
-Riverine,,Czechia,0.117,"",0.0547219086325978
-Woodland,,Czechia,0.292,"",1.29824004431172
-Human Modified,,Czechia,0.842,"",0.185554965861519
-Rock,,Czechia,0.8,"",6.76757002141264
-Forest,,Europe,0.876,"",4.95330923235456
-Wetland,,Europe,0.005,**,10.5005277211758
-Shrubland,,Europe,0.617,"",1.45431214213988
+Forest,,Czechia,0.867,"",1.29009944803093
+Wetland,,Czechia,0.011,*,2.84082785161927
+Shrubland,,Czechia,0.711,"",1.73008529602814
+Grassland,,Czechia,0.189,"",3.74905922324884
+Riverine,,Czechia,0.12,"",0.0547219086325978
+Woodland,,Czechia,0.33,"",1.29824004431172
+Human Modified,,Czechia,0.832,"",0.185554965861519
+Rock,,Czechia,0.789,"",6.76757002141264
+Forest,,Europe,0.879,"",4.95330923235456
+Wetland,,Europe,0.001,**,10.5005277211758
+Shrubland,,Europe,0.609,"",1.45431214213988
 Grassland,,Europe,0.004,**,4.46932805627854
-Marine,,Europe,0.076,"",0.626869421801251
-Riverine,,Europe,0.509,"",0.498766343668019
-Rock,,Europe,0.862,"",1.80967835963329
-Woodland,,Europe,0.892,"",0.647124416234285
-Human Modified,,Europe,0.369,"",0.278637073891047
-Coastal,,Europe,0.172,"",1.22752049108688
-Woodland,,New York,0.401,"",2.23222017604611
-Forest,,New York,0.154,"",3.24447124198483
-Wetland,,New York,0.487,"",3.1099833475137
-Grassland,,New York,0.032,*,1.88905059455035
-Shrubland,,New York,0.97,"",0.250059693364555
-Human Modified,,New York,0.722,"",0.303556123995564
-Coastal,,New York,0.189,"",1.10282151871125
-Riverine,,New York,0.762,"",1.24387048482452
-Forest,,New Zealand,0.79,"",0.48504568050424
-Human Modified,,New Zealand,0.949,"",1.18715077195821
-Grassland,,New Zealand,0.447,"",1.02400123319199
-Shrubland,,New Zealand,0.475,"",0.457628118517557
-Riverine,,New Zealand,0.712,"",0.271361902624739
-Wetland,,New Zealand,0.003,**,1.69781494368883
-Marine,,New Zealand,0.073,"",3.97821004071861
-Coastal,,New Zealand,0.749,"",1.25063006683979
-Woodland,,New Zealand,0.456,"",3.52492063824293
+Marine,,Europe,0.064,"",0.626869421801251
+Riverine,,Europe,0.512,"",0.498766343668019
+Rock,,Europe,0.891,"",1.80967835963329
+Woodland,,Europe,0.9,"",0.647124416234285
+Human Modified,,Europe,0.345,"",0.278637073891047
+Coastal,,Europe,0.187,"",1.22752049108688
+Woodland,,New York,0.34,"",2.23222017604611
+Forest,,New York,0.167,"",3.24447124198483
+Wetland,,New York,0.439,"",3.1099833475137
+Grassland,,New York,0.023,*,1.88905059455035
+Shrubland,,New York,0.973,"",0.250059693364555
+Human Modified,,New York,0.733,"",0.303556123995564
+Coastal,,New York,0.203,"",1.10282151871125
+Riverine,,New York,0.767,"",1.24387048482452
+Forest,,New Zealand,0.822,"",0.48504568050424
+Human Modified,,New Zealand,0.944,"",1.18715077195821
+Grassland,,New Zealand,0.468,"",1.02400123319199
+Shrubland,,New Zealand,0.479,"",0.457628118517557
+Riverine,,New Zealand,0.692,"",0.271361902624739
+Wetland,,New Zealand,0.008,**,1.69781494368883
+Marine,,New Zealand,0.069,"",3.97821004071861
+Coastal,,New Zealand,0.731,"",1.25063006683979
+Woodland,,New Zealand,0.494,"",3.52492063824293

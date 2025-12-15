@@ -1,27 +1,27 @@
 group,group_median,atlas,p_value,significance,y
-Granivore,,Czechia,0.905,"",0.185554965861519
-Vertivore,,Czechia,0.435,"",1.29009944803093
-Invertivore,,Czechia,0.793,"",3.74905922324884
-Aquatic predator,,Czechia,0.007,**,6.76757002141264
-Omnivore,,Czechia,0.837,"",1.73008529602814
-Herbivore aquatic,,Czechia,0.133,"",1.18651109221755
-Herbivore terrestrial,,Czechia,0.072,"",2.45232479826891
-Granivore,,Europe,0.82,"",1.20250370546232
-Vertivore,,Europe,0.037,*,1.99771096420045
-Invertivore,,Europe,0.373,"",1.67069499262887
-Aquatic predator,,Europe,0.32,"",3.07743022908777
-Scavenger,,Europe,,,0.0824686578275058
-Herbivore aquatic,,Europe,0.001,**,4.95330923235456
-Omnivore,,Europe,0.22,"",10.5005277211758
-Herbivore terrestrial,,Europe,0.542,"",4.46932805627854
-Vertivore,,New York,0.22,"",1.88905059455035
-Aquatic predator,,New York,0.046,*,1.70647134644426
-Granivore,,New York,0.447,"",0.180750187864255
-Omnivore,,New York,0.52,"",3.24447124198483
-Invertivore,,New York,0.889,"",2.23222017604611
-Herbivore aquatic,,New York,0.724,"",1.3186618445384
-Granivore,,New Zealand,0.951,"",3.52492063824293
-Invertivore,,New Zealand,0.789,"",1.4890295185667
-Omnivore,,New Zealand,0.989,"",2.17727166310047
-Aquatic predator,,New Zealand,0.06,"",3.97821004071861
-Herbivore aquatic,,New Zealand,0.115,"",0.702641998733235
+Granivore,,Czechia,0.916,"",0.185554965861519
+Vertivore,,Czechia,0.409,"",1.29009944803093
+Invertivore,,Czechia,0.78,"",3.74905922324884
+Aquatic predator,,Czechia,0.013,*,6.76757002141264
+Omnivore,,Czechia,0.817,"",1.73008529602814
+Herbivore aquatic,,Czechia,0.15,"",1.18651109221755
+Herbivore terrestrial,,Czechia,0.06,"",2.45232479826891
+Granivore,,Europe,0.8,"",1.20250370546232
+Vertivore,,Europe,0.032,*,1.99771096420045
+Invertivore,,Europe,0.406,"",1.67069499262887
+Aquatic predator,,Europe,0.332,"",3.07743022908777
+Scavenger,,Europe,0.246,"",0.0824686578275058
+Herbivore aquatic,,Europe,0.002,**,4.95330923235456
+Omnivore,,Europe,0.257,"",10.5005277211758
+Herbivore terrestrial,,Europe,0.509,"",4.46932805627854
+Vertivore,,New York,0.211,"",1.88905059455035
+Aquatic predator,,New York,0.042,*,1.70647134644426
+Granivore,,New York,0.453,"",0.180750187864255
+Omnivore,,New York,0.492,"",3.24447124198483
+Invertivore,,New York,0.88,"",2.23222017604611
+Herbivore aquatic,,New York,0.704,"",1.3186618445384
+Granivore,,New Zealand,0.932,"",3.52492063824293
+Invertivore,,New Zealand,0.817,"",1.4890295185667
+Omnivore,,New Zealand,0.997,"",2.17727166310047
+Aquatic predator,,New Zealand,0.053,"",3.97821004071861
+Herbivore aquatic,,New Zealand,0.107,"",0.702641998733235
