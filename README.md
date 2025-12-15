@@ -1,29 +1,63 @@
-# Large-scale co-occurrence dynamics in bird assemblages
-This is the github repo holding the code to repeat the analysis steps in _Large-scale co-occurrence dynamics in bird assemblages_. Will be made accessible for peer review and later publication via e.g. Zenodo release. 
+# Large-scale avian co-occurrence stability over time
+This repository contains the R-code and processed data for data processing and analysis and figures in
+our manuscript _Large-scale avian co-occurrence stability over time_. 
 
-Here is the [link to the manuscript](https://docs.google.com/document/d/1KR0dv7v_4Ajuaas5ygwyHME2rlHCxMAXGSAvvIH5wig/edit?tab=t.0) 
 
+## Abstract 
+Past decades have seen changes in species abundances, distributions, and species
+composition, alongside environmental changes. Given this omnipresent sense of
+change, we expect most facets of biodiversity to also be dynamic. One such facet
+is co-occurrence among species, but we know little about its temporal change,
+even though it may indicate disruptions of established species interactions,
+dispersal barriers, or shared niches.
 
-## Summary 
-Recent studies reveal shifts in biodiversity, but how species assemblages change
-spatially remains unclear. Analyzing bird co-occurrence patterns across four
-large-scale, long-term datasets from Czechia, Europe, New York, and New Zealand,
-each spanning about 30 years, we expected spatial associations to shift due to
-environmental changes. Surprisingly, bird co-occurrence patterns remained stable
-over time, with no directional trends linked to species’ phylogenetic,
-functional, or range size changes. Only aquatic species showed slight
-aggregation increases. Species pairs’ co-occurrences and typical groupings
-changed minimally, suggesting co-occurring species respond similarly to
-environmental shifts. This stability contrasts with observed community turnover,
-offering a different perspective on biodiversty change and interesting avenue for
-future research.
+Studies of biodiversity dynamics in recent decades have shown changes in
+community composition, yet the exact nature of how species assemblages change
+remains unclear. Given the commonly observed temporal community composition
+turnover and environmental changes, we expected to see changes in the
+co-occurrences among species.
 
+Focusing on birds, we analyzed co-occurrences among species pairs using four
+large-scale datasets covering Czechia, Europe, New York State, and New Zealand.
+Each dataset covers approx. 30 years, offering a unique temporal view on
+co-occurrences. 
+
+Surprisingly, we found that bird co-occurrence patterns remained
+remarkably stable through time. Changes in co-occurrences showed no tendency
+toward positive or negative values and did not correspond with phylogenetic or
+functional distances among species pairs, nor with shifts in their range sizes.
+In addition, the composition of co-occurrence values within entire groups of
+co-occurring species showed little change over time. There was a mild shift
+towards more co-occurrence in aquatic species, and less in forest-associated
+species. 
+
+Overall, we show that most species maintain their co-occurrences over
+decades, suggesting that co-occurring species show comparable reactions to
+environmental changes. Exploring how this stability in co-occurrence patterns
+aligns with previously observed large-scale biotic change could be an exciting
+direction for future work.
 
 
 ![](figures/fig1_V2.png "Data and Processing")
 
 
-## To do list:
--  Move all the occupancy data processing into one script so the non-open data can
-be handled more easily. That includes the dissimilarity matrix things in script
-03.
+## How to use this repository
+
+You can simply download the entire repository and use the derived datasets
+included here to explore data, analysis, results, and figures - those are
+scripts 03 and 04. For scripts 01 and 02, a second repository with the occupancy
+probability data is necessary. These are provided separately both for peer
+review and eventually publication. Link to this data repository is provided in
+the manuscript file.
+
+Following is a list of files included in the repository:
+
+### Data and files included
+
+file name                          |  description | included?
+-----------------------------------|--------------|-----------
+01_get_co-occurrence_estimates.R   |     bla     | no
+02_get_dissimilarities.R
+03_get_changes_in_co_occurrences.R
+04_make_figures.R
+05_figure5.R
