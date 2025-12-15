@@ -19,14 +19,17 @@ direction for future work.
 ![](figures/fig1_V2.png "Data and Processing")
 
 
-## How to use this repository
+## Desription of content & How to use
+
+If you decide to use code or data from this repo, please refer simply to the
+publication [doi will be inserted once published]
 
 You can simply download the entire repository and use the derived datasets
 included here to explore data, analysis, results, and figures - those are
 scripts 03 and 04. For scripts 01 and 02, a second repository with the occupancy
 probability data is necessary. These are provided separately both for peer
 review and eventually publication. Link to this data repository is provided in
-the manuscript file.
+the manuscript file and will be added here once it goes public.
 
 Following is a list of files included in the repository:
 
