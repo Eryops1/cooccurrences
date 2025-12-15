@@ -55,7 +55,7 @@ Following is a list of files included in the repository:
 ### Data and files included
 
 |file name                          |  description  | 
-|-----------------------------------:|--------------|
+|-----------------------------------:|:--------------|
 |SCRIPTS                            |               | 
 |01_get_co-occurrence_estimates.R   | Loads occupancy probability data, calculates co-occurrence metrics, save processed data for analysis |
 |02_get_dissimilarities.R           | Calculate Mantel tests for influence of phylogeny and traits |
