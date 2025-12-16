@@ -209,7 +209,7 @@ lw = 0.2
 (eu_map = ggplot(shapes$eu)+
     geom_sf(data=st_as_sf(grid_sub_eu), aes(fill=sum.psi_siteID), col=NA)+
     geom_sf(col="black", fill="NA", lwd=lw)+
-    scale_fill_gradient("species richness", low = 'white', high = '#5f89d8',
+    scale_fill_gradient("Species richness", low = 'white', high = '#5f89d8',
                         breaks = c(min(grid_sub_eu$sum.psi_siteID),max(grid_sub_eu$sum.psi_siteID)),
                         labels = c(round(min(grid_sub_eu$sum.psi_siteID)),round(max(grid_sub_eu$sum.psi_siteID))))+
   map_theme)
@@ -217,7 +217,7 @@ lw = 0.2
 (cz_map = ggplot(shapes$cz)+
     geom_sf(data=st_as_sf(grid_sub_cz), aes(fill=sum.psi_siteID), col=NA)+
     geom_sf(col="black", fill="NA", lwd=lw)+
-    scale_fill_gradient("species richness", low = 'white', high = '#c90f04',
+    scale_fill_gradient("Species richness", low = 'white', high = '#c90f04',
                         breaks = c(min(grid_sub_cz$sum.psi_siteID),max(grid_sub_cz$sum.psi_siteID)),
                         labels = c(round(min(grid_sub_cz$sum.psi_siteID)),round(max(grid_sub_cz$sum.psi_siteID))))+
     map_theme)
@@ -225,7 +225,7 @@ lw = 0.2
 (nz_map = ggplot(shapes$nz)+
     geom_sf(data=st_as_sf(grid_sub_nz), aes(fill=log(sum.psi_siteID)), col=NA)+
     geom_sf(col="black", fill="NA", lwd=lw)+
-    scale_fill_gradient("species richness", low = 'white', high = '#fecd04',##fecd04',#ebbe04
+    scale_fill_gradient("Species richness", low = 'white', high = '#fecd04',##fecd04',#ebbe04
                         breaks = c(min(log(grid_sub_nz$sum.psi_siteID)),max(log(grid_sub_nz$sum.psi_siteID))),
                         labels = c(round(min(grid_sub_nz$sum.psi_siteID)),round(max(grid_sub_nz$sum.psi_siteID))))+
     map_theme)
@@ -233,7 +233,7 @@ lw = 0.2
 (ny_map = ggplot(shapes$ny)+
     geom_sf(data=st_as_sf(grid_sub_ny), aes(fill=sum.psi_siteID), col=NA)+
     geom_sf(col="black", fill="NA", lwd=lw)+
-    scale_fill_gradient("species richness", low = 'white', high = '#85bb07',
+    scale_fill_gradient("Species richness", low = 'white', high = '#85bb07',
                         breaks = c(min(grid_sub_ny$sum.psi_siteID),max(grid_sub_ny$sum.psi_siteID)),
                         labels = c(round(min(grid_sub_ny$sum.psi_siteID)),round(max(grid_sub_ny$sum.psi_siteID))))+
     map_theme)
@@ -488,8 +488,11 @@ zhist = ggplot(fig_hist[over==TRUE,], aes(x=cor_ses))+
   #grid.col = c("segregated"="#1398E9", "neutral"="grey", "aggregated"="#E96513")
   scale_fill_manual(name = "", values = c("#1398E9", "grey", "#E96513"), labels=c("segregated", "neutral", "aggregated"))+
   scale_color_startrek(guide="none")+
-  labs(y="count", x="Co-occurrence (_Z_-score Spearman's \U03C1)")+
-  theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
+  labs(y="Count", x="Co-occurrence (_Z_-score Spearman's \U03C1)")+
+  theme(legend.position = "bottom", 
+        strip.text.y = element_text(angle=0), 
+        strip.background.y = element_rect(fill = "grey95", linewidth = 0),
+        panel.spacing.x = unit(0.3, "cm"))
 
 ### stats -----
 psych::describeBy(data=fin, cor_ses ~ atlas + time_bin, mat=TRUE, digits=2)
@@ -509,10 +512,13 @@ corscat = ggplot(fig_hist, aes(x=cor_obs, y=cor_ses, col=atlas))+
   facet_grid(time_bin~atlas)+
   scale_color_startrek(guide="none")+
   labs(y="*Z*-score Spearman's \U03C1", x="Spearman's \U03C1")+
-  theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
+  theme(legend.position = "bottom", 
+        strip.text.y = element_text(angle=0), 
+        strip.background.y = element_rect(fill = "grey95", linewidth = 0),
+        panel.spacing.x = unit(0.3, "cm"))
 
-plot_grid(zhist, corscat, ncol=1, labels = c("a)", "b)"), label_fontface = "plain", label_size = 10)
-ggsave(paste0("figures/", "figS1.png"), width=6, height = 6, bg="white")
+plot_grid(zhist, corscat, ncol=1, labels = c("a", "b"), label_fontface = "bold", label_size = 10)
+ggsave(paste0("figures/", "figS1.png"), width=8, height = 6, bg="white")
 
 rm(zhist, corscat)
 
@@ -573,7 +579,7 @@ statdat$label_m = paste0('mean:\n', statdat$delta_cor_obs_mean)
 (fig3a = ggplot(chan, aes(x=delta_cor_obs, col=atlas, fill=atlas))+
   geom_density()+
   facet_wrap(~atlas, ncol=4)+
-  labs(y="density", x="Co-occurrence change\n(\U0394 Spearman's \U03C1)")+
+  labs(y="Density", x="Co-occurrence change\n(\U0394 Spearman's \U03C1)")+
   stat_central_tendency(type="median", aes(col=atlas), lty=2)+
   scale_color_startrek(guide='none')+
   scale_fill_startrek(guide='none', alpha=0.5)+
@@ -621,11 +627,11 @@ statdat$label_m = paste0('mean:\n', statdat$delta_cor_obs_z_mean)
 ggplot(chan, aes(x=delta_cor_obs_z, col=atlas, fill=atlas))+
     geom_density()+
     facet_wrap(~atlas, ncol=4)+
-    labs(y="density", x="Co-occurrence change (*Z*-score \U0394 Spearman's \U03C1)")+
+    labs(y="Density", x="Co-occurrence change (*Z*-score \U0394 Spearman's \U03C1)")+
     stat_central_tendency(type="mean", aes(col=atlas), lty=2)+
     scale_color_startrek(guide='none')+
     scale_fill_startrek(guide='none', alpha=0.5)+
-    geom_text(data=statdat, aes(label=label_m), y=0.04, x=20, col="black", size=2.5)
+    geom_text(data=statdat, aes(label=label_med), y=0.04, x=30, col="black", size=2.5, hjust=1)
 ggsave(paste0("figures/", "delta_cor_obs_z_density.png"), width=6, height = 1.7, bg="white", dpi=300)
 
 
@@ -733,7 +739,7 @@ ggplot(keep, aes(x=PD_perm, fill=atlas))+
   scale_fill_startrek(guide="none")+
   scale_color_startrek(guide="none")+
   stat_central_tendency(type="mean", aes(col=atlas), lty=1)+
-  labs(x="Mantel test score (\U03C1)", y="counts")+
+  labs(x="Mantel test score (\U03C1)", y="Count")+
   facet_grid(atlas~metric, scales="free_y")+
   geom_text(data=tab, aes(x=Mantel_r+0.01, y=y_pos, label = significance),
             inherit.aes = FALSE,
@@ -830,7 +836,7 @@ cor.test(bc$bray_curtis, bc$delta_cor_obs_mean, method = "s")
     scale_fill_startrek(guide="none")+
     scale_color_startrek(guide="none")+
     stat_central_tendency(type="median", aes(col=atlas), lty=2)+
-    labs(x='Bray-Curtis between sampling periods, per species', y="count"))
+    labs(x='Bray-Curtis between sampling periods, per species', y="Count"))
 ggsave(paste0("figures/", "bray_curtis_per_species.png"), width=90, height = 70, units = "mm", bg="white", dpi=300)
 
 
@@ -863,11 +869,11 @@ ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill 
   #geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
   geom_boxplot(varwidth = T, outlier.alpha = 0.2) +
   scale_fill_startrek() +
-  labs(y = "", x = "species median \u0394 Spearman's \u03C1") +
+  labs(y = "", x = "Species median \u0394 Spearman's \u03C1") +
   theme(legend.position = "none") +
   facet_grid(~atlas, scales="free") +
   geom_text(data = stat_res$stats, aes(x = y, y = group, label = significance),
-            hjust = 0, size = 4)
+            hjust = 0, size = 3)
 ggsave(paste0("figures/", "delta_cor_obs_per_Primary.Lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
@@ -880,7 +886,7 @@ taxplot = ggplot(stat_res$data, aes(y = Order1, x = delta_cor_obs_median, fill =
   geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
   geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
   scale_fill_startrek() +
-  labs(y = "", x = "species median \u0394 Spearman's \u03C1") +
+  labs(y = "", x = "Species median \u0394 Spearman's \u03C1") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol = 4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -898,7 +904,7 @@ habplot = ggplot(stat_res$data, aes(y = Habitat, x = delta_cor_obs_median, fill 
   geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
   geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
   scale_fill_startrek() +
-  labs(y = "", x = "species median \u0394 Spearman's \u03C1") +
+  labs(y = "", x = "Species median \u0394 Spearman's \u03C1") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol = 4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -921,7 +927,7 @@ trophplot = ggplot(stat_res$data, aes(y = Trophic.Niche, x = delta_cor_obs_media
   geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
   geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
   scale_fill_startrek() +
-  labs(y = "", x = "species median \u0394 Spearman's \u03C1") +
+  labs(y = "", x = "Species median \u0394 Spearman's \u03C1") +
   theme(legend.position = "none") +
   facet_grid(~atlas, scales="free") +
   geom_text(data = stat_res$stats, aes(x = y, y = group, label = significance),
@@ -930,9 +936,9 @@ trophplot = ggplot(stat_res$data, aes(y = Trophic.Niche, x = delta_cor_obs_media
 
 ### PLOT
 set_null_device("png") # this prevents the space after unicode to dissapear
-plot_grid(taxplot, habplot, trophplot, ncol=1, labels = c("a)", "b)", "c)"),  
-          label_fontface = "plain", label_size = 10, rel_heights = c(65, 40, 45))
-ggsave(paste0("figures/", "figS5.png"), width=200, height = 65+40+45, unit="mm", bg="white", dpi=300)
+plot_grid(taxplot, habplot, trophplot, ncol=1, labels = c("a", "b", "c"),  
+          label_fontface = "bold", label_size = 10, rel_heights = c(65, 40, 40))
+ggsave(paste0("figures/", "figS5.png"), width=200, height = 65+40+45+20, unit="mm", bg="white", dpi=300)
 rm(taxplot, trophplot, habplot)
 
 
@@ -973,7 +979,7 @@ ggplot(indiv, aes(x=as.numeric(clr(change_occupancy)), y=delta_cor_obs_median, c
     stat_cor(method = "spearman", size=3, p.accuracy = 0.001, cor.coef.name = "rho",
              label.sep = "\n", col="black")+
     facet_wrap(~atlas, ncol=2)+
-    labs(x="\U0394 occupancy (centered log-ratio)", y="median \U0394 Spearman's \U03C1")+
+    labs(x="\U0394 occupancy (centered log-ratio)", y="Median species \U0394 Spearman's \U03C1")+
     theme(legend.position = "bottom")
 ggsave(paste0("figures/", "delta_occupancy_delta_correlation.png"), units="mm", width=120, height = 100, bg="white", dpi = 300)
 
@@ -1085,8 +1091,8 @@ trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupanc
 
 
 
-plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a)", "b)", "c)", "d)"),  
-          label_fontface = "plain", label_size = 10, rel_heights = c(30, 70, 40, 45))
+plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a", "b", "c", "d"),  
+          label_fontface = "bold", label_size = 10, rel_heights = c(30, 70, 40, 40))
 ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45+10, unit="mm", bg="white", dpi=300)
 
 
@@ -1230,7 +1236,7 @@ ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill 
   geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
   geom_boxplot(varwidth = T, outlier.alpha = 0.2) +
   scale_fill_startrek() +
-  labs(y = "", x = "species median \u0394 Spearman's \u03C1") +
+  labs(y = "", x = "Species median \u0394 Spearman's \u03C1") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol = 4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -1276,7 +1282,7 @@ ggplot(indiv2, aes(xmin = min_range, xmax = max_range, y=rank))+
   scale_color_startrek(guide="none") +
   geom_vline(xintercept=0, col="white")+
   geom_point(aes(x=median_delta_cor_obs.x), col="black", size=0.5)+
-  labs(y="species ordered by median co-occurrence change", x="\U0394 Spearman's \U03C1")+
+  labs(y="Species ordered by median co-occurrence change", x="\U0394 Spearman's \U03C1")+
   facet_wrap('atlas', scales="free_y")
 
 ggsave(paste0("figures/", "intraspecific_variability.png"), width=200, height = 160, unit="mm", bg="white", dpi=300)

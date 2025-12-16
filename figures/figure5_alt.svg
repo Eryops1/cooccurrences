@@ -24,15 +24,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.3505331"
-     inkscape:cx="508.68801"
-     inkscape:cy="492.39815"
-     inkscape:window-width="2560"
-     inkscape:window-height="1378"
-     inkscape:window-x="0"
-     inkscape:window-y="30"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="g15200"
+     inkscape:zoom="0.47748556"
+     inkscape:cx="482.73711"
+     inkscape:cy="538.23618"
+     inkscape:window-width="1325"
+     inkscape:window-height="936"
+     inkscape:window-x="539"
+     inkscape:window-y="155"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
      showguides="true">
     <sodipodi:guide
        position="91.245216,245.98987"
@@ -319,12 +319,17 @@
        xml:space="preserve"
        transform="matrix(0.15539506,0,0,0.15539506,-78.781637,-142.65104)"
        id="text4329-9-4-0-9-0"
-       style="font-size:9.33333px;line-height:1.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:justify;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect4331-5-7-8-0-5);display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.53543;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"><tspan
+       style="font-size:9.33333px;line-height:1.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:justify;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect4331-5-7-8-0-5);display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.53543;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
+       inkscape:export-filename="figure5.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
          x="647.41211"
          y="1016.7332"
-         id="tspan16513"><tspan
+         id="tspan1128"><tspan
+           style="font-weight:bold"
+           id="tspan1124">a</tspan><tspan
            style="font-size:32px;-inkscape-font-specification:'sans-serif, Normal';fill:#000000;stroke:none"
-           id="tspan16511">a) joint movement</tspan></tspan></text>
+           id="tspan1126">  joint movement</tspan></tspan></text>
     <g
        id="g9808"
        transform="matrix(0.43881616,0,0,0.43904258,-151.90067,-273.4408)">
@@ -519,9 +524,11 @@
        style="font-size:9.33333px;line-height:1.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:justify;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect4331-5-7-8-0-5-7);display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.53543;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"><tspan
          x="647.41211"
          y="1016.7332"
-         id="tspan16517"><tspan
+         id="tspan1134"><tspan
+           style="font-weight:bold"
+           id="tspan1130">b</tspan><tspan
            style="font-size:32px;-inkscape-font-specification:'sans-serif, Normal';fill:#000000;stroke:none"
-           id="tspan16515">b) expansion (or contraction)</tspan></tspan></text>
+           id="tspan1132">  expansion (or contraction)</tspan></tspan></text>
     <g
        id="g8520"
        transform="matrix(0.43904067,0,0,0.43904067,-151.68612,-269.7688)">
@@ -689,13 +696,13 @@
        transform="matrix(0.58732003,0,0,0.58732003,-341.52223,-372.02305)"><tspan
          x="733.07031"
          y="695.01074"
-         id="tspan16525"><tspan
+         id="tspan1142"><tspan
            style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16519">jacc</tspan><tspan
+           id="tspan1136">jacc</tspan><tspan
            style="font-size:65%;-inkscape-font-specification:'sans-serif, Normal';font-variant-position:sub;baseline-shift:sub"
-           id="tspan16521">avg</tspan><tspan
+           id="tspan1138">avg</tspan><tspan
            style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16523">= 0.38</tspan></tspan></text>
+           id="tspan1140">= 0.38</tspan></tspan></text>
     <g
        id="g14264">
       <path
@@ -1353,9 +1360,11 @@
        style="font-size:9.33333px;line-height:1.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:justify;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect4331-5-7-8-0-5-7-3-4-8);display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.53543;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"><tspan
          x="647.41211"
          y="1016.7332"
-         id="tspan16529"><tspan
+         id="tspan1148"><tspan
+           style="font-weight:bold"
+           id="tspan1144">c</tspan><tspan
            style="font-size:32px;-inkscape-font-specification:'sans-serif, Normal';fill:#000000;stroke:none"
-           id="tspan16527">c) occupancy probability change</tspan></tspan></text>
+           id="tspan1146">  occupancy probability change</tspan></tspan></text>
     <rect
        style="fill:#f3f3f3;fill-opacity:1;stroke:#000000;stroke-width:0.197658;stroke-opacity:1;stop-color:#000000"
        id="rect234-3-4-6-0-4-2-8-5-7-4-3-8-1"
@@ -1531,30 +1540,6 @@
        cy="156.97375"
        rx="1.6480703"
        ry="1.6480744" />
-    <text
-       xml:space="preserve"
-       style="font-size:11.2889px;line-height:0.9;white-space:pre;inline-size:103.14;display:inline;fill:#000000;stroke-width:0.264583"
-       x="733.07031"
-       y="695.01074"
-       id="text2590-9-6-4-0"
-       transform="matrix(0.58732003,0,0,0.58732003,-388.66297,-202.9837)"><tspan
-         x="733.07031"
-         y="695.01074"
-         id="tspan16537"><tspan
-           style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16531">jacc</tspan><tspan
-           style="font-size:65%;baseline-shift:sub"
-           id="tspan16533">avg</tspan><tspan
-           style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16535"> = 0.83
-</tspan></tspan><tspan
-         x="733.07031"
-         y="705.17075"
-         id="tspan16543"><tspan
-           style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16539">ρ</tspan><tspan
-           style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16541"> = 0.7</tspan></tspan></text>
     <g
        id="g15200"
        transform="translate(24.257133)">
@@ -1857,9 +1842,9 @@
        style="font-size:18.5216px;line-height:3.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect11108);display:inline;fill:#c98f7e;stroke:#ff0000;stroke-width:0;stop-color:#000000"><tspan
          x="442.45508"
          y="54.759458"
-         id="tspan16547"><tspan
+         id="tspan1152"><tspan
            style="fill:#000000"
-           id="tspan16545">ρ = 0.33</tspan></tspan></text>
+           id="tspan1150">ρ = 0.33</tspan></tspan></text>
     <path
        style="fill:#ff96bd;fill-opacity:1;stroke:#000000;stroke-width:0.570331;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-3-9-3-9-3-6-0-2);stop-color:#000000"
        d="M 92.174638,103.41844 H 117.78116"
@@ -1884,13 +1869,13 @@
        transform="matrix(0.58732003,0,0,0.58732003,-340.45401,-309.93209)"><tspan
          x="733.07031"
          y="695.01074"
-         id="tspan16555"><tspan
+         id="tspan1160"><tspan
            style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16549">jacc</tspan><tspan
+           id="tspan1154">jacc</tspan><tspan
            style="font-size:65%;-inkscape-font-specification:'sans-serif, Normal';font-variant-position:sub;baseline-shift:sub"
-           id="tspan16551">avg</tspan><tspan
+           id="tspan1156">avg</tspan><tspan
            style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16553">= 0.75</tspan></tspan></text>
+           id="tspan1158">= 0.75</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26665634,0,0,0.26665634,-21.099832,98.606229)"
@@ -1898,9 +1883,9 @@
        style="font-size:18.5216px;line-height:3.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect11108-2);display:inline;fill:#c98f7e;stroke:#ff0000;stroke-width:0;stop-color:#000000"><tspan
          x="442.45508"
          y="54.759458"
-         id="tspan16559"><tspan
+         id="tspan1164"><tspan
            style="fill:#000000"
-           id="tspan16557">ρ = 0.32</tspan></tspan></text>
+           id="tspan1162">ρ = 0.32</tspan></tspan></text>
     <path
        style="fill:#ff96bd;fill-opacity:1;stroke:#000000;stroke-width:0.570331;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-3-9-3-9-3-6-0-2-1);stop-color:#000000"
        d="m 91.9237,162.15248 h 25.60652"
@@ -1925,13 +1910,13 @@
        transform="matrix(0.58732003,0,0,0.58732003,-340.70495,-251.19805)"><tspan
          x="733.07031"
          y="695.01074"
-         id="tspan16567"><tspan
+         id="tspan1172"><tspan
            style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16561">jacc</tspan><tspan
+           id="tspan1166">jacc</tspan><tspan
            style="font-size:65%;-inkscape-font-specification:'sans-serif, Normal';font-variant-position:sub;baseline-shift:sub"
-           id="tspan16563">avg</tspan><tspan
+           id="tspan1168">avg</tspan><tspan
            style="font-size:8.46667px;-inkscape-font-specification:'sans-serif, Normal'"
-           id="tspan16565">= 0.83</tspan></tspan></text>
+           id="tspan1170">= 0.83</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26665634,0,0,0.26665634,-21.350772,157.34026)"
@@ -1939,9 +1924,9 @@
        style="font-size:18.5216px;line-height:3.5;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect11108-2-4);display:inline;fill:#c98f7e;stroke:#ff0000;stroke-width:0;stop-color:#000000"><tspan
          x="442.45508"
          y="54.759458"
-         id="tspan16571"><tspan
+         id="tspan1176"><tspan
            style="fill:#000000"
-           id="tspan16569">ρ = 0.7</tspan></tspan></text>
+           id="tspan1174">ρ = 0.7</tspan></tspan></text>
     <circle
        id="path14060"
        style="fill:#000000;stroke:#ff0000;stroke-width:0.264583"
