@@ -1,6 +1,6 @@
-# Large-scale avian co-occurrence stability over time
+# Large-scale bird co-occurrence stability over time
 This repository contains the R-code and processed data for data processing and analysis and figures in
-our manuscript _Large-scale avian co-occurrence stability over time_. 
+our manuscript _Large-scale bird co-occurrence stability over time_. 
 
 
 ## Abstract (shortened)
