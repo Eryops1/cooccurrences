@@ -568,22 +568,25 @@ statdat$delta_cor_obs_mean = round(statdat$delta_cor_obs_mean,3)
 statdat$label_med = paste0('median:\n', statdat$delta_cor_obs_median)
 statdat$label_m = paste0('mean:\n', statdat$delta_cor_obs_mean)
 
+
 ## plot
 (fig3a = ggplot(chan, aes(x=delta_cor_obs, col=atlas, fill=atlas))+
   geom_density()+
   facet_wrap(~atlas, ncol=4)+
   labs(y="density", x="Co-occurrence change\n(\U0394 Spearman's \U03C1)")+
-  stat_central_tendency(type="mean", aes(col=atlas), lty=2)+
+  stat_central_tendency(type="median", aes(col=atlas), lty=2)+
   scale_color_startrek(guide='none')+
   scale_fill_startrek(guide='none', alpha=0.5)+
-  geom_text(data=statdat, aes(label=label_m), y=2, x=0.5, col="black", size=2.5))
+  geom_text(data=statdat, aes(label=label_med), y=2, x=0.9, col="black", size=2.3, hjust=1))
 ggsave(paste0("figures/", "delta_cor_obs_density.png"), width=6, height = 1.7, bg="white", dpi=300)
 
 ### stats -----
 # by atlas
 psych::describeBy(data=chan, delta_cor_obs ~ atlas, mat=TRUE, digits=2, IQR=TRUE, quant=c(.25,.75))
+tapply(chan$delta_cor_obs, chan$atlas, function(x){shapiro.test(sample(x, 5000, replace = FALSE))})
 # all data
 psych::describe(chan$delta_cor_obs, IQR=TRUE, quant=c(.25,.75))
+
 
 # # V2, for poster
 # ggplot(chan, aes(x=delta_cor_obs, col=atlas, fill=atlas))+
