@@ -66,6 +66,7 @@ permdiff = function(x, group, rep = 1000, metric) {
   atlas_vec = c()
   pvals = c()
   group_median = c()
+  group_size = c()
   
   for (a in unique(subx$atlas)) {
     sub_atlas = subx[atlas == a]
@@ -87,6 +88,7 @@ permdiff = function(x, group, rep = 1000, metric) {
         atlas_vec = c(atlas_vec, a)
         pvals = c(pvals, perm_pvalue)
         group_median = c(group_median, median(sub_atlas[[metric]]))
+        group_size = c(group_size, nrow(subset_group))
       }
     }
   }
@@ -96,7 +98,8 @@ permdiff = function(x, group, rep = 1000, metric) {
     group = group_vec,
     group_median = group_median,
     atlas = atlas_vec,
-    p_value = pvals
+    p_value = pvals,
+    n = group_size
   )
   
   # safer version for data.table
@@ -454,10 +457,20 @@ ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
   stat_central_tendency(type="median", col="black", lty=2, lwd=0.3)+
   scale_fill_manual(name = "", values = c("#1398E9", "grey", "#E96513"), labels=c("segregated", "neutral", "aggregated"))+
   scale_color_startrek(guide="none")+
-  labs(y="count", x="Co-occurrence (Spearman's \U03C1)")+
+  labs(y="Count", x="Co-occurrence (Spearman's \U03C1)")+
   theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
 ggsave(paste0("figures/", "cor_obs_histogram.png"), width=6, height = 2.5, bg="white")
 
+# ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
+#   geom_histogram(binwidth = 0.1, aes(fill=atlas), bins=160)+ # aes(y = ..density..), , fill="grey80"
+#   facet_grid(time_bin~atlas, scales="free_y")+
+#   geom_vline(xintercept = 0, lty=1, col="grey40", lwd=0.3)+
+#   stat_central_tendency(type="median", col="black", lty=2, lwd=0.3)+
+#   scale_fill_startrek(guide="none")+
+#   scale_color_startrek(guide="none")+
+#   labs(y="Count", x="Co-occurrence (Spearman's \U03C1)")+
+#   theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
+# ggsave(paste0("figures/", "cor_obs_histogram_TALK.png"), width=6, height = 2.5, bg="white")
 
 ### stats ----
 psych::describeBy(data=fig_hist, cor_obs ~ atlas + time_bin, mat=TRUE, digits=2)
@@ -517,7 +530,7 @@ corscat = ggplot(fig_hist, aes(x=cor_obs, y=cor_ses, col=atlas))+
         strip.background.y = element_rect(fill = "grey95", linewidth = 0),
         panel.spacing.x = unit(0.3, "cm"))
 
-plot_grid(zhist, corscat, ncol=1, labels = c("a", "b"), label_fontface = "bold", label_size = 10)
+plot_grid(zhist, corscat, ncol=1, labels = c("A", "B"), label_fontface = "bold", label_size = 10)
 ggsave(paste0("figures/", "figS1.png"), width=8, height = 6, bg="white")
 
 rm(zhist, corscat)
@@ -865,7 +878,7 @@ stat_res = permdiff(indiv, group = "Primary.Lifestyle", rep=10000, metric="delta
 fwrite(stat_res$stats, "output/lifestyle_permutation_stats.csv")
 
 ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill = atlas)) +
-  geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
+  geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey20", lty=2) +
   #geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
   geom_boxplot(varwidth = T, outlier.alpha = 0.2) +
   scale_fill_startrek() +
@@ -874,6 +887,8 @@ ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill 
   facet_grid(~atlas, scales="free") +
   geom_text(data = stat_res$stats, aes(x = y, y = group, label = significance),
             hjust = 0, size = 3)
+# geom_text(data = stat_res$stats, aes(x = y, y = group, label = n),
+#           hjust = 0, size = 3)
 ggsave(paste0("figures/", "delta_cor_obs_per_Primary.Lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
@@ -936,7 +951,7 @@ trophplot = ggplot(stat_res$data, aes(y = Trophic.Niche, x = delta_cor_obs_media
 
 ### PLOT
 set_null_device("png") # this prevents the space after unicode to dissapear
-plot_grid(taxplot, habplot, trophplot, ncol=1, labels = c("a", "b", "c"),  
+plot_grid(taxplot, habplot, trophplot, ncol=1, labels = c("A", "B", "C"),  
           label_fontface = "bold", label_size = 10, rel_heights = c(65, 40, 40))
 ggsave(paste0("figures/", "figS5.png"), width=200, height = 65+40+45+20, unit="mm", bg="white", dpi=300)
 rm(taxplot, trophplot, habplot)
@@ -1091,7 +1106,8 @@ trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupanc
 
 
 
-plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, labels = c("a", "b", "c", "d"),  
+plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, 
+          labels = c("A", "B", "C", "D"),  
           label_fontface = "bold", label_size = 10, rel_heights = c(30, 70, 40, 40))
 ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45+10, unit="mm", bg="white", dpi=300)
 
