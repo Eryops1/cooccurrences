@@ -17,7 +17,8 @@ pkgs <- c("data.table",
           "terra",
           "sf",
           "parallel",
-          "tictoc")
+          "tictoc",
+          "bipartite")
 groundhog.library(pkgs, "2025-10-25")
 theme_set(theme_classic())
 
@@ -30,7 +31,7 @@ theme_set(theme_classic())
 # Load data --------------------------------------------------------------------
 
 # chose a dataset_id: 5(CZ), 6(NY), 17(NZ), 26(EU)
-dataset_id = 5
+dataset_id = 6
 files = dir(paste0('data/occ_', as.character(dataset_id)), full.names = T)
 
 tmp = list()
