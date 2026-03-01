@@ -57,6 +57,12 @@ more_lists_atlas=26_SES_cor_scales=1_2025-06-21.rds
 # maps output
 maps/
 
+# submission documents etc
+submission_stuff/
+
+# nature submission extended data figures mash
+figures_nature/
+
 figure5.R
 grid_sizes.R
 old_vs_NEW.R

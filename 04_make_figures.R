@@ -31,7 +31,7 @@ theme_set(theme_classic(base_size = 9)+
             theme(axis.title.y = ggtext::element_markdown())+
             theme(legend.title = ggtext::element_markdown()))
 
-
+figure_folder <- "figures_nature/"
 
 
 # functions --------------------------------------------------------------
@@ -87,7 +87,7 @@ permdiff = function(x, group, rep = 1000, metric) {
         group_vec = c(group_vec, g)
         atlas_vec = c(atlas_vec, a)
         pvals = c(pvals, perm_pvalue)
-        group_median = c(group_median, median(sub_atlas[[metric]]))
+        group_median = c(group_median, median(sub_atlas[[metric]], na.rm = TRUE))
         group_size = c(group_size, nrow(subset_group))
       }
     }
@@ -250,7 +250,7 @@ plot_grid(plot_grid(eu_map+theme(plot.background = element_rect(), title = eleme
                     ncol = 1, rel_heights = c(1,0.9)), 
           ncol=2, rel_widths = c(3,1.2))
 # doing the fine tuning and arranging in inkscape
-ggsave("figures/data_maps.svg", width=7.6, height=4, bg = "white")
+ggsave(paste0(figure_folder, "data_maps.svg"), width=7.6, height=4, bg = "white")
 rm(shapes, grid_sub_cz, grid_sub_eu, grid_sub_ny, grid_sub_nz, m, map_theme)
 rm(list=ls(pattern="_map"))
 
@@ -291,7 +291,7 @@ ggplot(temp, aes(x=year, y=atlas, col=atlas, size=2))+
   labs(y="")+
   theme(panel.background = element_blank())
 # separate dots here but saving it small enough will connect them just fine
-ggsave('figures/data_timeline.svg', height=1.5, width=2.4, bg = NULL)
+ggsave(paste0(figure_folder, "data_timeline.svg"), height=1.5, width=2.4, bg = NULL)
 
 # Average time span covered: ceiling(mean(years(atlas2))) -
 # ceiling(mean(years(atlas1)))
@@ -384,7 +384,7 @@ fwrite(tmp2, "output/transition_stats3.csv")
 atli = sort(unique(tmp$atlas))
 grid.col = c("segregated"="#1398E9", "neutral"="grey", "aggregated"="#E96513")
 
-png("figures/circlize.png", width =11, height=11.4, units = "cm", bg = "transparent", res = 300)
+png(paste0(figure_folder, "circlize.png"), width =11, height=11.4, units = "cm", bg = "transparent", res = 300)
 par(mfrow=c(2,2))
 for(a in 1:length(atli)){
   tmp_cz = as.data.table(table(tmp$transition[tmp$atlas==atli[a]]))
@@ -450,7 +450,7 @@ fig_hist$x_bin = cut(
   labels = c("Seg (< -1.96)", "Neutral (-1.96 to 1.96)", "Agg (> 1.96)"),
   ordered_result = TRUE   # ensures ordering
 )
-ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
+cor_per_time <- ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
   geom_histogram(binwidth = 0.1, aes(fill=x_bin), bins=160)+ # aes(y = ..density..), , fill="grey80"
   facet_grid(time_bin~atlas, scales="free_y")+
   geom_vline(xintercept = 0, lty=1, col="grey40", lwd=0.3)+
@@ -459,7 +459,8 @@ ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
   scale_color_startrek(guide="none")+
   labs(y="Count", x="Co-occurrence (Spearman's \U03C1)")+
   theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
-ggsave(paste0("figures/", "cor_obs_histogram.png"), width=6, height = 2.5, bg="white")
+
+ggsave(cor_per_time, paste0(figure_folder, "cor_obs_histogram.png"), width=6, height = 2.5, bg="white")
 
 # ggplot(fig_hist[over==TRUE,], aes(x=cor_obs))+
 #   geom_histogram(binwidth = 0.1, aes(fill=atlas), bins=160)+ # aes(y = ..density..), , fill="grey80"
@@ -470,7 +471,7 @@ ggsave(paste0("figures/", "cor_obs_histogram.png"), width=6, height = 2.5, bg="w
 #   scale_color_startrek(guide="none")+
 #   labs(y="Count", x="Co-occurrence (Spearman's \U03C1)")+
 #   theme(legend.position = "bottom", strip.text.y = element_text(angle=0), strip.background.y = element_rect(fill = "grey95", linewidth = 0))
-# ggsave(paste0("figures/", "cor_obs_histogram_TALK.png"), width=6, height = 2.5, bg="white")
+# ggsave(paste0(figure_folder, "cor_obs_histogram_TALK.png"), width=6, height = 2.5, bg="white")
 
 ### stats ----
 psych::describeBy(data=fig_hist, cor_obs ~ atlas + time_bin, mat=TRUE, digits=2)
@@ -520,7 +521,7 @@ psych::describeBy(data=fin, cor_ses ~ atlas + time_bin, mat=TRUE, digits=2)
 ## raw vs Z-scores ----
 corscat = ggplot(fig_hist, aes(x=cor_obs, y=cor_ses, col=atlas))+
   geom_point(alpha=0.01)+
-  stat_cor(method = "spearman", label.x = 0.2, label.y = -25, size=3, 
+  stat_cor(method = "spearman", label.x = 0.2, label.y = -25, size=2.5, 
            label.sep = "\n", p.accuracy = 0.001, cor.coef.name = "rho", col="black")+
   facet_grid(time_bin~atlas)+
   scale_color_startrek(guide="none")+
@@ -530,8 +531,10 @@ corscat = ggplot(fig_hist, aes(x=cor_obs, y=cor_ses, col=atlas))+
         strip.background.y = element_rect(fill = "grey95", linewidth = 0),
         panel.spacing.x = unit(0.3, "cm"))
 
-plot_grid(zhist, corscat, ncol=1, labels = c("A", "B"), label_fontface = "bold", label_size = 10)
-ggsave(paste0("figures/", "figS1.png"), width=8, height = 6, bg="white")
+plot_grid(cor_per_time, zhist+theme(legend.position = "none"), corscat, 
+          ncol=1, labels = "auto", label_fontface = "bold", 
+          label_size = 10, rel_heights = c(1,0.85,1))
+ggsave(paste0(figure_folder, "figS1.png"), width=6, height = 6.5, bg="white")
 
 rm(zhist, corscat)
 
@@ -597,7 +600,7 @@ statdat$label_m = paste0('mean:\n', statdat$delta_cor_obs_mean)
   scale_color_startrek(guide='none')+
   scale_fill_startrek(guide='none', alpha=0.5)+
   geom_text(data=statdat, aes(label=label_med), y=2, x=0.9, col="black", size=2.3, hjust=1))
-ggsave(paste0("figures/", "delta_cor_obs_density.png"), width=6, height = 1.7, bg="white", dpi=300)
+ggsave(paste0(figure_folder, "delta_cor_obs_density.png"), width=6, height = 1.7, bg="white", dpi=300)
 
 ### stats -----
 # by atlas
@@ -617,7 +620,7 @@ psych::describe(chan$delta_cor_obs, IQR=TRUE, quant=c(.25,.75))
 #   scale_color_startrek(guide='none')+
 #   scale_fill_startrek(guide='none', alpha=0.5)+
 #   geom_text(data=statdat, aes(label=label_m), y=2, x=0.5, col="black", size=2.5)
-# ggsave(paste0("figures/", "delta_cor_obs_density_2x2.png"), width=3, height = 3, bg="white", dpi=600)
+# ggsave(paste0(figure_folder, "delta_cor_obs_density_2x2.png"), width=3, height = 3, bg="white", dpi=600)
 
 
 
@@ -645,7 +648,7 @@ ggplot(chan, aes(x=delta_cor_obs_z, col=atlas, fill=atlas))+
     scale_color_startrek(guide='none')+
     scale_fill_startrek(guide='none', alpha=0.5)+
     geom_text(data=statdat, aes(label=label_med), y=0.04, x=30, col="black", size=2.5, hjust=1)
-ggsave(paste0("figures/", "delta_cor_obs_z_density.png"), width=6, height = 1.7, bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "delta_cor_obs_z_density.png"), width=6, height = 1.7, bg="white", dpi=300)
 
 
 ### stats ----
@@ -738,7 +741,7 @@ tab$significance = ifelse(tab$p_value < 0.001, "***",
                           ifelse(tab$p_value < 0.01, "**",
                                  ifelse(tab$p_value < 0.05, "*", "")))
 
-write.csv(tab, "output/mantel_results.csv")
+#write.csv(tab, "output/mantel_results.csv")
 
 # add positions for asterisks placement
 tab$y_pos = rep(c(100,140,140,80),2)
@@ -746,7 +749,7 @@ tab$x_pos = tab$Mantel_r
 tab$metric = ifelse(tab$Matrix2 == "phylogenetic distance", "PD", "FD")
 
 
-ggplot(keep, aes(x=PD_perm, fill=atlas))+
+mantel_fig <- ggplot(keep, aes(x=PD_perm, fill=atlas))+
   geom_histogram(alpha=0.7)+
   geom_vline(aes(xintercept = statistic), lty=2, col="black")+
   scale_fill_startrek(guide="none")+
@@ -757,9 +760,16 @@ ggplot(keep, aes(x=PD_perm, fill=atlas))+
   geom_text(data=tab, aes(x=Mantel_r+0.01, y=y_pos, label = significance),
             inherit.aes = FALSE,
             hjust = 0,
-            size = 3)
+            size = 3)+
+  theme(strip.text = element_text(size=6))
+# tab2 <- tab[, .(atlas, Mantel_r, p_value, significance, metric)]
+# setnames(tab2, old=c("atlas", "metric", "Mantel_r", "p_value"), 
+#          new=c("Atlas", "Metric", "Mantel r", "P-value"),skip_absent = T)
+# mantel_fig + wrap_table(tab2[, .(Atlas, `Mantel r`, `P-value`, Metric)]) + 
+#   plot_layout(ncol=2)
 
-ggsave(paste0("figures/", "mantel_histograms.png"), width=120, height = 80, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "mantel_histograms.png"), width=140, height = 72, 
+       unit="mm", bg="white", dpi=300)
 
 rm(list=ls(pattern="mantel"))
 
@@ -850,7 +860,7 @@ cor.test(bc$bray_curtis, bc$delta_cor_obs_mean, method = "s")
     scale_color_startrek(guide="none")+
     stat_central_tendency(type="median", aes(col=atlas), lty=2)+
     labs(x='Bray-Curtis between sampling periods, per species', y="Count"))
-ggsave(paste0("figures/", "bray_curtis_per_species.png"), width=90, height = 70, units = "mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "bray_curtis_per_species.png"), width=90, height = 70, units = "mm", bg="white", dpi=300)
 
 
 # add to indiv object
@@ -889,7 +899,7 @@ ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill 
             hjust = 0, size = 3)
 # geom_text(data = stat_res$stats, aes(x = y, y = group, label = n),
 #           hjust = 0, size = 3)
-ggsave(paste0("figures/", "delta_cor_obs_per_Primary.Lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "delta_cor_obs_per_Primary.Lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
 # SI
@@ -951,9 +961,9 @@ trophplot = ggplot(stat_res$data, aes(y = Trophic.Niche, x = delta_cor_obs_media
 
 ### PLOT
 set_null_device("png") # this prevents the space after unicode to dissapear
-plot_grid(taxplot, habplot, trophplot, ncol=1, labels = c("A", "B", "C"),  
+plot_grid(taxplot, habplot, trophplot, ncol=1, labels = "auto",  
           label_fontface = "bold", label_size = 10, rel_heights = c(65, 40, 40))
-ggsave(paste0("figures/", "figS5.png"), width=200, height = 65+40+45+20, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "figS5.png"), width=200, height = 65+40+45+20, unit="mm", bg="white", dpi=300)
 rm(taxplot, trophplot, habplot)
 
 
@@ -986,17 +996,17 @@ indiv = merge(indiv, unique(range_change[,.(species, atlas, change_occupancy, ch
               all.x=TRUE)
 
 # use log ratio for change occupancy
-ggplot(indiv, aes(x=as.numeric(clr(change_occupancy)), y=delta_cor_obs_median, col=atlas))+
-    geom_vline(xintercept = 0, col='grey') + geom_hline(yintercept = 0, col='grey')+
+(scatter_delta_occ <- ggplot(indiv, aes(x=as.numeric(clr(change_occupancy)), y=delta_cor_obs_median, col=atlas))+
+    geom_vline(xintercept = 0, col='grey', lty=2) + geom_hline(yintercept = 0, col='grey', lty=2)+
     geom_point(alpha=0.7)+
     scale_color_startrek(guide="none")+
     geom_smooth(alpha=0.5, lwd=0.5)+
-    stat_cor(method = "spearman", size=3, p.accuracy = 0.001, cor.coef.name = "rho",
-             label.sep = "\n", col="black")+
-    facet_wrap(~atlas, ncol=2)+
+    stat_cor(method = "spearman", size=2.5, p.accuracy = 0.001, cor.coef.name = "rho",
+             label.sep = "\n", col="black", label.y = 0.22)+
+    facet_wrap(~atlas, ncol=4)+
     labs(x="\U0394 occupancy (centered log-ratio)", y="Median species \U0394 Spearman's \U03C1")+
-    theme(legend.position = "bottom")
-ggsave(paste0("figures/", "delta_occupancy_delta_correlation.png"), units="mm", width=120, height = 100, bg="white", dpi = 300)
+    theme(legend.position = "bottom"))
+ggsave(paste0(figure_folder,  "delta_occupancy_delta_correlation.png"), units="mm", width=120, height = 100, bg="white", dpi = 300)
 
 
 cor.test(indiv$change_occupancy, indiv$delta_cor_obs_median, method="s")
@@ -1010,16 +1020,16 @@ tapply(indiv, indiv$atlas, function(x){cor.test(x$delta_cor_obs_median, as.numer
 
 range_diff_stats = permdiff(indiv, group="Primary.Lifestyle", rep=1000, metric="occupancy_sum_T1")
 fwrite(range_diff_stats$stats, "output/range_permutation_stats.csv")
-ggplot(range_diff_stats$data, aes(y = Primary.Lifestyle, x = occupancy_sum_T1, fill = atlas)) +
-  geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
-  geom_boxplot(varwidth = F, outlier.alpha = 0.2) +
+(range_diff_t1 <- ggplot(range_diff_stats$data, aes(y = Primary.Lifestyle, x = occupancy_sum_T1, fill = atlas)) +
+  geom_vline(data=range_diff_stats$stats, aes(xintercept = group_median), col = "grey") +
+  geom_boxplot(varwidth = T, outlier.alpha = 0.2) +
   scale_fill_startrek() +
   labs(y = "", x = "Sum of occupancy probabilites in T1") +
   theme(legend.position = "none") +
   facet_grid(~atlas, scales="free")+
   geom_text(data = range_diff_stats$stats, aes(x = y, y = group, label = significance),
-            hjust = 0, size = 4)
-ggsave(paste0("figures/", "sum_occupancy_T1_lifestyle.png"), units="mm", width=180, height = 40, bg="white", dpi = 300)
+            hjust = 0, size = 4))
+#ggsave(paste0(figure_folder,  "sum_occupancy_T1_lifestyle.png"), units="mm", width=180, height = 40, bg="white", dpi = 300)
 
 # groups should be compared among each other and not betwen each other. permutation test
 # tmp = tapply(indiv, indiv$atlas, function(x){pairwise.wilcox.test(x$occupancy_sum_T1, x$Primary.Lifestyle, p.adjust.method = "fdr")})
@@ -1048,7 +1058,7 @@ primary_lifestyleplot_occ = ggplot(stat_res$data, aes(y = Primary.Lifestyle, x =
             inherit.aes = FALSE,
             hjust = 0,
             size = 4)
-ggsave(paste0("figures/", "occupancy_change_per_lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "occupancy_change_per_lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
 stat_res = permdiff(indiv, group="Order1", rep=1000, metric="change_occupancy")
@@ -1066,7 +1076,7 @@ taxplot_occ = ggplot(stat_res$data, aes(y = Order1, x = change_occupancy, fill =
             inherit.aes = FALSE,
             hjust = 0,
             size = 4)
-#ggsave(paste0("figures/", "occupancy_change_per_order.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+#ggsave(paste0(figure_folder,  "occupancy_change_per_order.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
 stat_res = permdiff(indiv, group="Habitat", rep=1000, metric="change_occupancy")
@@ -1084,7 +1094,7 @@ habplot_occ = ggplot(stat_res$data, aes(y = Habitat, x = change_occupancy, fill 
             inherit.aes = FALSE,
             hjust = 0,
             size = 4)
-#ggsave(paste0("figures/", "occupancy_change_per_habitat.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+#ggsave(paste0(figure_folder,  "occupancy_change_per_habitat.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
 stat_res = permdiff(indiv, group="Trophic.Niche", rep=1000, metric="change_occupancy")
@@ -1102,14 +1112,14 @@ trophplot_occ = ggplot(stat_res$data, aes(y = Trophic.Niche, x = change_occupanc
             inherit.aes = FALSE,
             hjust = 0,
             size = 4)
-#ggsave(paste0("figures/", "occupancy_change_per_trophic_niche.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+#ggsave(paste0(figure_folder,  "occupancy_change_per_trophic_niche.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
 
 plot_grid(primary_lifestyleplot_occ, taxplot_occ, habplot_occ, trophplot_occ, ncol=1, 
-          labels = c("A", "B", "C", "D"),  
+          labels = "auto",  
           label_fontface = "bold", label_size = 10, rel_heights = c(30, 70, 40, 40))
-ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45+10, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "figS10.png"), width=200, height = 30+65+40+45+10, unit="mm", bg="white", dpi=300)
 
 
 
@@ -1147,7 +1157,7 @@ ggsave(paste0("figures/", "figS10.png"), width=200, height = 30+65+40+45+10, uni
 #             inherit.aes = FALSE,
 #             hjust = 0,
 #             size = 4)
-# ggsave(paste0("figures/", "presence_change_per_lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
+# ggsave(paste0(figure_folder,  "presence_change_per_lifestyle.png"), width=180, height = 40, unit="mm", bg="white", dpi=300)
 
 
 
@@ -1203,7 +1213,7 @@ ggplot(tmp, aes(y=abs(delta_cor_obs), x=range_ratio_mean.psi, col=min_pair_range
            label.sep = "\n", col="black",label.x = 0.8)+
   theme(legend.position = "bottom", legend.key.width = unit(12, "mm"))+
   geom_vline(xintercept = c(0.25,0.5,0.75), col="grey")
-ggsave(paste0("figures/", "delta_cor_obs_VS_range_size_ratio.png"), width=6.5, height = 6, bg="white")
+ggsave(paste0(figure_folder,  "delta_cor_obs_VS_range_size_ratio.png"), width=6.5, height = 6, bg="white")
 
 # quantify variation:
 cor.test(abs(tmp$delta_cor_obs), tmp$range_ratio_mean.psi, method="s")
@@ -1248,11 +1258,11 @@ indiv_br = merge(indiv_br,
 stat_res = permdiff(indiv_br, group="Primary.Lifestyle", rep=1000, metric="delta_cor_obs_median")
 fwrite(stat_res$stats, "output/primarylifestyle_permutation_stats_nosmall.csv")
 
-ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill = atlas)) +
+figs7 <- ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill = atlas)) +
   geom_vline(data=stat_res$stats, aes(xintercept = group_median), col = "grey") +
   geom_boxplot(varwidth = T, outlier.alpha = 0.2) +
   scale_fill_startrek() +
-  labs(y = "", x = "Species median \u0394 Spearman's \u03C1") +
+  labs(y = "", x = "Species median \u0394 Spearman's \u03C1 (balanced ranges)") +
   theme(legend.position = "none") +
   facet_wrap(~atlas, ncol = 4, scales="free_x") +
   geom_text(data = stat_res$stats,
@@ -1260,7 +1270,13 @@ ggplot(stat_res$data, aes(y = Primary.Lifestyle, x = delta_cor_obs_median, fill 
             inherit.aes = FALSE,
             hjust = 0,
             size = 4)
-ggsave(paste0("figures/", "delta_cor_obs_per_Primary.Lifestyle_larger_ranges.png"), width=200, height = 40, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "delta_cor_obs_per_Primary.Lifestyle_larger_ranges.png"), width=200, height = 40, unit="mm", bg="white", dpi=300)
+
+plot_grid(scatter_delta_occ, range_diff_t1, figs7,
+          ncol=1, labels="auto", rel_heights = c(60,40,40))
+ggsave(paste0(figure_folder,  "occupancy_affects_and_balanced_ranges.png"),
+       width=200, height = 62+40+40, unit="mm", bg="white", dpi=300)
+
 
 rm(indiv_int, indiv_br)
 
@@ -1301,7 +1317,7 @@ ggplot(indiv2, aes(xmin = min_range, xmax = max_range, y=rank))+
   labs(y="Species ordered by median co-occurrence change", x="\U0394 Spearman's \U03C1")+
   facet_wrap('atlas', scales="free_y")
 
-ggsave(paste0("figures/", "intraspecific_variability.png"), width=200, height = 160, unit="mm", bg="white", dpi=300)
+ggsave(paste0(figure_folder,  "intraspecific_variability.png"), width=200, height = 160, unit="mm", bg="white", dpi=300)
 
 
 
