@@ -68,5 +68,8 @@ Following is a list of files included in the repository:
 |OUTPUT                             |               |
 | | csv files with stats from permutation and mantel tests |
 
+### Software
 
-
+All analyses were run in R version 4.5.2, R packages used were data.table, tictoc and ecodist for analysis, and terra, ggplot2, sf, cowplot, ggsci, ggtext, ggpubr, circlize, and compositions for visualization. 
+We use groundhog for package version control. 
+Tested on Linux Mint 22.3, 32.5 GB RAM.
