@@ -48,29 +48,26 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-# that one big file
-more_lists_atlas=26_SES_cor_scales=1_2025-06-21.rds
 
-# occupancy probability files
-/data/occ*
 
-# maps output
+######################################
+
+# DATA - add later to zenodo
+data/
+
+# BIG FILES > 100MB
+trait_analysis_input2.rds
+final_analysis_input2.rds
+
+# species maps
 maps/
+
+
+
 
 # submission documents etc
 submission_stuff/
 
-# nature submission extended data figures mash
-figures_nature/
 
-figure5.R
-grid_sizes.R
-old_vs_NEW.R
-00_sunday_simulations.R
-04_make_figures_conf.R
-author_affiliations.txt
-Co-occurrence manuscript_V2.pdf
-Co-occurrence manuscript V2.docx
-Tietje_et_al_Co-occurrence_manuscript.pdf
-Tietje_et_al_Co-occurrence_manuscript_SI.pdf
+
 .positai
