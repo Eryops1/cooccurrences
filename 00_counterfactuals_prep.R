@@ -146,7 +146,7 @@ for(did in c(5,6,17,26)){
   grid = grid[grid$scalingID==scalID,]
   grid = grid[grid$site %in% dat$siteID, ]
   
-  ele <- terra::rast("data/counterfactuals/env/elevation/wc2.1_30s/wc2.1_30s_elev.tif")
+  ele <- terra::rast("data/environment/elevation/wc2.1_30s/wc2.1_30s_elev.tif")
   ele <- terra::crop(ele, grid)
   elevation <- exactextractr::exact_extract(ele, grid, fun="mean")
   grid = cbind(grid, elevation)

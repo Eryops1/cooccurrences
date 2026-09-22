@@ -11,7 +11,7 @@
 
 
 
-<title>README_updated</title>
+<title>README</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -354,19 +354,21 @@ display: none;
 
 <div id="large-scale-bird-co-occurrence-stability-over-time" class="section level1">
 <h1>Large-scale bird co-occurrence stability over time</h1>
-<p>This repository contains the R-code and processed data for data
-processing and analysis and figures in our manuscript <em>Large-scale
-bird co-occurrence stability over time</em>.</p>
+<p>This repository contains the R-code and some data for data processing
+and analysis and figures in our manuscript <em>Large-scale bird
+co-occurrence stability over time</em>. For all data, please refer to
+the Zenodo repository.</p>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<p>Focusing on birds, we analyzed co-occurrences among species pairs
-using four large-scale datasets covering Czechia, Europe, New York
-State, and New Zealand. Each dataset covers approx. 30 years, offering a
-unique temporal view on co-occurrences. Using increasingly realistic
+<p>We analyzed co-occurrences among bird species pairs using four
+large-scale datasets covering Czechia, Europe, New York State, and New
+Zealand. Each dataset covers approx. 30 years, offering a unique
+temporal view on co-occurrences. Using increasingly realistic
 counterfactual scenarios, we compare the observed changes in spatial
 associations to changes expected due to basic geometric properties,
 simple environmental sorting and climate- and landuse change, and we
-analyse potential traits as drivers of differences between pairs.</p>
+analyse potential traits as drivers of differences between species
+pairs.</p>
 <p><img role="img" src="figures2/fig1.png" title="Data and Processing" /></p>
 </div>
 <div id="desription-of-content-how-to-use" class="section level2">
@@ -394,375 +396,102 @@ public.</p>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">File name</th>
-<th align="left">Description</th>
-<th align="left"></th>
-<th align="left"></th>
+<th>File name</th>
+<th>Description</th>
+<th>Reads</th>
+<th>Produces</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>SCRIPTS</strong></td>
-<td align="left"><strong>Description</strong></td>
-<td align="left"><strong>Reads</strong></td>
-<td align="left"><strong>Produces</strong></td>
+<td><code>00_climate_download.R</code></td>
+<td>Downloads and prepares annual climate data and extracts
+environmental information for the atlas grids.</td>
+<td>Elevation raster; atlas grid files; external climate data.</td>
+<td>Annual climate rasters; T1/T2 climate rasters and differences;
+environmental extraction files.</td>
 </tr>
 <tr class="even">
-<td align="left">:—</td>
-<td align="left">:—</td>
-<td align="left">:—</td>
-<td align="left">:—</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>00_climate_download.R</code></td>
-<td align="left">Downloads and prepares climate and environmental raster
-data, including annual climate layers and elevation extracts.</td>
-<td align="left"><code>data/all_scales_atlas_&lt;atlas&gt;.gpkg</code>;
-external climate and elevation data</td>
-<td align="left"><code>data/climate/annual/*</code>; climate
-T1/T2/difference rasters;
-<code>data/counterfactuals/env/elevation_extract_atlas&lt;atlas&gt;.rds</code></td>
-</tr>
-<tr class="even">
-<td align="left"><code>00_climate_models.R</code></td>
-<td align="left">Extracts climate and land-use predictors and fits
-climate/environment-based species distribution models used to generate
-the climate counterfactual.</td>
-<td align="left"><code>data/processed_occupancy_for_CFs_2_&lt;atlas&gt;.rds</code>;
-climate rasters; land-use rasters; atlas grids</td>
-<td align="left"><code>data/climate/env_input_&lt;atlas&gt;.rds</code>;
-<code>data/counterfactuals2/c+l_sim_T2_species_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>00_counterfactuals_prep.R</code></td>
-<td align="left">Processes the occupancy-probability input data and
-prepares the spatial data used by the counterfactual simulations,
-including elevation-enhanced grids.</td>
-<td align="left"><code>data/occ_&lt;atlas&gt;/*</code>; elevation
-extract; atlas grids</td>
-<td align="left"><code>data/processed_occupancy_for_CFs_2_&lt;atlas&gt;.rds</code>;
-<code>data/one_scale_atlas_with_elevation&lt;atlas&gt;.gpkg</code></td>
-</tr>
-<tr class="even">
-<td align="left"><code>01_counterfactuals_server_with_uncertainty.R</code></td>
-<td align="left">Generates the uncertainty simulations and spatial
-counterfactual communities; designed to run on the server with multiple
-cores.</td>
-<td align="left">Processed occupancy; atlas/elevation data; uncertainty
-and climate/environment inputs</td>
-<td align="left"><code>data/uncertainty/simulated_&lt;species&gt;_&lt;atlas&gt;.rds</code>;
-<code>data/counterfactuals2/simulated_&lt;species&gt;_&lt;atlas&gt;.rds</code>;
-<code>simulated_elevation_*</code>; <code>simulated_env_*</code></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>02_counterfactuals_pairwise_analysis.R</code></td>
-<td align="left">Calculates pairwise association statistics for the
-observed and counterfactual communities.</td>
-<td align="left">Counterfactual simulation files; processed occupancy;
-spatial-overlap inputs</td>
-<td align="left"><code>data/counterfactuals2/results/results_&lt;atlas&gt;_&lt;method&gt;_chunk_&lt;chunk&gt;.rds</code>;
-<code>data/uncertainty/results/results_&lt;atlas&gt;_&lt;method&gt;_chunk_&lt;chunk&gt;.rds</code>;
-overlap chunk files</td>
-</tr>
-<tr class="even">
-<td align="left"><code>03_z_scores_server.R</code></td>
-<td align="left">Calculates z-scores for qualitative changes in species
-associations using permutation-based null distributions; designed to run
-on the server with many cores.</td>
-<td align="left">Pairwise analysis results from script 02</td>
-<td align="left"><code>data/z_scores.rds</code></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>04_all_analysis.R</code></td>
-<td align="left">Combines the counterfactual and z-score results and
-performs the main association, transition, trait, and phylogenetic
+<td><code>00_counterfactuals_prep.R</code></td>
+<td>Prepares occupancy and spatial data for the counterfactual
 analyses.</td>
-<td align="left">Counterfactual and uncertainty results; overlap
-results; <code>data/z_scores.rds</code>; trait input data; AVONET
-data</td>
-<td align="left"><code>data/final_analysis_input2.rds</code>;
+<td><code>data/occ_&lt;atlas&gt;/*</code>; atlas grid files; elevation
+raster.</td>
+<td><code>data/processed_occupancy_for_CFs_2_&lt;atlas&gt;.rds</code>;
+<code>data/one_scale_atlas_with_elevation&lt;atlas&gt;.gpkg</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>00_climate_models.R</code></td>
+<td>Fits the climate-based counterfactual models for each species and
+dataset.</td>
+<td>Processed occupancy; annual climate rasters; land-use data; atlas
+grids; uncertainty simulations.</td>
+<td><code>data/environment/climate/env_input_&lt;atlas&gt;.rds</code>;
+climate-model counterfactual RDS files.</td>
+</tr>
+<tr class="even">
+<td><code>01_counterfactuals_server.R</code></td>
+<td>Generates the stochastic and environmental counterfactual
+simulations.</td>
+<td>Processed occupancy; atlas/grid data; uncertainty simulations;
+climate-model counterfactuals.</td>
+<td>Uncertainty simulations and standard, elevation, environmental, and
+climate counterfactual simulations.</td>
+</tr>
+<tr class="odd">
+<td><code>02_counterfactuals_pairwise_analysis_server.R</code></td>
+<td>Calculates pairwise co-occurrence/overlap statistics for the
+counterfactual simulations.</td>
+<td>Processed occupancy; uncertainty and counterfactual simulation
+files.</td>
+<td>Chunked overlap and pairwise-result RDS files.</td>
+</tr>
+<tr class="even">
+<td><code>03_z_scores_server.R</code></td>
+<td>Calculates z-scores comparing observed and simulated pairwise
+associations.</td>
+<td>Uncertainty simulations and pairwise counterfactual results.</td>
+<td><code>data/z_scores.rds</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>04_all_analysis.R</code></td>
+<td>Combines results and performs the final statistical, transition, and
+trait analyses.</td>
+<td>Counterfactual results; uncertainty results; overlap files;
+z-scores; trait data; processed occupancy.</td>
+<td><code>output/corT1T2.rds</code>;
+<code>data/final_analysis_input2.rds</code>;
 <code>data/qualitative_transition_analysis.rds</code>;
-<code>corT1T2.rds</code>; <code>output/transition_stats_last.csv</code>;
-<code>output/model_phy_sig_output_&lt;atlas&gt;.rds</code></td>
+<code>output/transition_stats_last.csv</code>; phylogenetic-signal
+results.</td>
 </tr>
 <tr class="even">
-<td align="left"><code>05_make_figures.R</code></td>
-<td align="left">Generates the main and supplementary figures from the
-saved analysis results.</td>
-<td align="left">Saved analysis results; atlas spatial data; geographic
-boundary files</td>
-<td align="left">Figure files in <code>figures2/</code></td>
+<td><code>05_make_figures.R</code></td>
+<td>Produces the figures and figure-specific summaries from the analysis
+outputs.</td>
+<td>Final analysis data; transition analysis; z-scores; processed
+occupancy; climate metadata; simulation and spatial data.</td>
+<td>Files in <code>figures2/</code>, including the main figures and
+supporting plots.</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>99_functions.R</code></td>
-<td align="left">Shared functions sourced by the analysis scripts.</td>
-<td align="left">—</td>
-<td align="left">—</td>
+<td><code>ssh_run_CF.sh</code></td>
+<td>Server wrapper for running the counterfactual simulations.</td>
+<td><code>01_counterfactuals_server.R</code>.</td>
+<td>Server run/log output.</td>
 </tr>
 <tr class="even">
-<td align="left"><code>ssh_run_CF.sh</code></td>
-<td align="left">Server wrapper for
-<code>01_counterfactuals_server_with_uncertainty.R</code>.</td>
-<td align="left">—</td>
-<td align="left">Server log files</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>ssh_run_cf_analysis.sh</code></td>
-<td align="left">Server wrapper for
-<code>02_counterfactuals_pairwise_analysis.R</code>.</td>
-<td align="left">—</td>
-<td align="left">Server log files</td>
-</tr>
-<tr class="even">
-<td align="left"><code>ssh_z_scores.sh</code></td>
-<td align="left">Server wrapper for
-<code>03_z_scores_server.R</code>.</td>
-<td align="left">—</td>
-<td align="left">Server log files</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>INPUT DATA</strong></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/occ_&lt;atlas&gt;/</code></td>
-<td align="left">Occupancy-probability RDS files used by
-<code>00_counterfactuals_prep.R</code>; these are provided
-separately.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/all_scales_atlas_&lt;atlas&gt;.gpkg</code></td>
-<td align="left">Spatial atlas grids used by the preparation,
-climate-model, counterfactual, and figure scripts for atlases 5, 6, 17,
-and 26.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/counterfactuals/env/elevation/wc2.1_30s/wc2.1_30s_elev.tif</code></td>
-<td align="left">Elevation raster used to extract elevation for the
-spatial grids.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/climate/annual/</code></td>
-<td align="left">Annual climate raster layers used by the climate
-models.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/landuse/</code></td>
-<td align="left">Land-use raster layers used by the climate/environment
-models.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/trait_analysis_input2.rds</code></td>
-<td align="left">Trait-analysis input data used by
-<code>04_all_analysis.R</code>.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/AVONET1_BirdLife.csv</code></td>
-<td align="left">AVONET bird trait data used to attach species traits to
-the pairwise results.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/europe.gpkg</code></td>
-<td align="left">Europe outline used for mapping.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/czechia.gpkg</code></td>
-<td align="left">Czechia outline used for mapping.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/nz.gpkg</code></td>
-<td align="left">New Zealand outline used for mapping.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/new_york_state.gpkg</code></td>
-<td align="left">New York State outline used for mapping.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>GENERATED DATA</strong></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/counterfactuals/env/elevation_extract_atlas&lt;atlas&gt;.rds</code></td>
-<td align="left">Elevation extracted for the atlas grids.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/processed_occupancy_for_CFs_2_&lt;atlas&gt;.rds</code></td>
-<td align="left">Processed occupancy data used as input for the
-counterfactual analyses.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/one_scale_atlas_with_elevation&lt;atlas&gt;.gpkg</code></td>
-<td align="left">Atlas grids with extracted elevation values.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/climate/env_input_&lt;atlas&gt;.rds</code></td>
-<td align="left">Climate and land-use predictors extracted for the atlas
-grids.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/counterfactuals2/c+l_sim_T2_species_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
-<td align="left">Climate/environment-based species predictions for the
-second time period.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/uncertainty/simulated_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
-<td align="left">Species-level uncertainty simulations.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/counterfactuals2/simulated_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
-<td align="left">Standard spatial counterfactual simulations.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/counterfactuals2/simulated_elevation_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
-<td align="left">Elevation-informed counterfactual simulations.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/counterfactuals2/simulated_env_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
-<td align="left">Environment-informed counterfactual simulations.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/&lt;atlas&gt;_overlap_chunk_&lt;chunk&gt;.rds</code></td>
-<td align="left">Pairwise spatial-overlap results.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/counterfactuals2/results/results_&lt;atlas&gt;_&lt;method&gt;_chunk_&lt;chunk&gt;.rds</code></td>
-<td align="left">Pairwise counterfactual analysis results.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/uncertainty/results/results_&lt;atlas&gt;_&lt;method&gt;_chunk_&lt;chunk&gt;.rds</code></td>
-<td align="left">Pairwise uncertainty-analysis results.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/z_scores.rds</code></td>
-<td align="left">Permutation-based z-score results from the server
+<td><code>ssh_run_CF_analysis.sh</code></td>
+<td>Server wrapper for running the pairwise counterfactual
 analysis.</td>
-<td align="left"></td>
-<td align="left"></td>
+<td><code>02_counterfactuals_pairwise_analysis_server.R</code>.</td>
+<td>Server run/log output.</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>corT1T2.rds</code></td>
-<td align="left">Pairwise uncertainty results retained for the T1–T2
-association analysis.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/final_analysis_input2.rds</code></td>
-<td align="left">Main processed pairwise analysis data used by
-subsequent analyses and figures.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/qualitative_transition_analysis.rds</code></td>
-<td align="left">Processed results from the qualitative
-association-transition analysis.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>output/transition_stats_last.csv</code></td>
-<td align="left">Summary statistics for qualitative association
-transitions.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>output/model_phy_sig_output_&lt;atlas&gt;.rds</code></td>
-<td align="left">Trait-model and phylogenetic-signal results for each
-atlas.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><strong>CLIMATE DATA GENERATED BY
-<code>00_climate_download.R</code></strong></td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/climate/annual/MAT_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
-<td align="left">Annual mean annual temperature layers.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/climate/annual/TAP_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
-<td align="left">Annual total annual precipitation layers.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>data/climate/annual/SEA_T_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
-<td align="left">Annual temperature seasonality layers.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left"><code>data/climate/annual/SEA_P_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
-<td align="left">Annual precipitation seasonality layers.</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>&lt;atlas&gt;_&lt;variable&gt;_T1.tif</code>,
-<code>&lt;atlas&gt;_&lt;variable&gt;_T2.tif</code>,
-<code>&lt;atlas&gt;_&lt;variable&gt;_diff.tif</code></td>
-<td align="left">Time-period summaries and differences of the climate
-variables used in the analyses.</td>
-<td align="left"></td>
-<td align="left"></td>
+<td><code>ssh_z_scores.sh</code></td>
+<td>Server wrapper for calculating z-scores.</td>
+<td><code>03_z_scores_server.R</code>.</td>
+<td>Server run/log output.</td>
 </tr>
 </tbody>
 </table>
@@ -781,9 +510,165 @@ used by the active code are: <code>ape</code>, <code>broom</code>,
 <code>performance</code>, <code>phytools</code>,
 <code>RhpcBLASctl</code>, <code>scico</code>, <code>scattermore</code>,
 <code>sf</code>, <code>sp</code>, <code>terra</code>, and
-<code>vegan</code>. We use groundhog for package version control. Tested
-on Linux Mint 22.3, 32.5 GB RAM.</p>
+<code>vegan</code>. Tested on Linux Mint 22.3, 32.5 GB RAM.</p>
 </div>
+</div>
+<div id="files-read-and-produced-by-the-scripts" class="section level2">
+<h2>Files read and produced by the scripts</h2>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>data/occ_&lt;atlas&gt;/*</code></td>
+<td>Species occurrence/occupancy data for each atlas dataset.</td>
+</tr>
+<tr class="even">
+<td><code>data/all_scales_atlas_&lt;atlas&gt;.gpkg</code></td>
+<td>Atlas spatial data containing the sampling grid and spatial units at
+different scales.</td>
+</tr>
+<tr class="odd">
+<td><code>data/environment/elevation/wc2.1_30s/wc2.1_30s_elev.tif</code></td>
+<td>Elevation raster used in the spatial preparation and counterfactual
+analyses.</td>
+</tr>
+<tr class="even">
+<td><code>data/environment/climate/annual/MAT_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
+<td>Annual mean annual temperature raster.</td>
+</tr>
+<tr class="odd">
+<td><code>data/environment/climate/annual/TAP_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
+<td>Annual total annual precipitation raster.</td>
+</tr>
+<tr class="even">
+<td><code>data/environment/climate/annual/SEA_T_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
+<td>Annual temperature seasonality raster.</td>
+</tr>
+<tr class="odd">
+<td><code>data/environment/climate/annual/SEA_P_&lt;year&gt;_&lt;atlas&gt;.tif</code></td>
+<td>Annual precipitation seasonality raster.</td>
+</tr>
+<tr class="even">
+<td><code>&lt;atlas&gt;_&lt;variable&gt;_T1.tif</code></td>
+<td>Climate-variable raster representing conditions at time 1.</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;atlas&gt;_&lt;variable&gt;_T2.tif</code></td>
+<td>Climate-variable raster representing conditions at time 2.</td>
+</tr>
+<tr class="even">
+<td><code>&lt;atlas&gt;_&lt;variable&gt;_diff.tif</code></td>
+<td>Difference between the climate variable at time 2 and time 1.</td>
+</tr>
+<tr class="odd">
+<td><code>data/landuse/*</code></td>
+<td>Land-use/environmental predictor data used in the environmental
+counterfactual models.</td>
+</tr>
+<tr class="even">
+<td><code>data/uncertainty/simulated_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
+<td>Species-level stochastic simulations used to represent
+uncertainty.</td>
+</tr>
+<tr class="odd">
+<td><code>data/processed_occupancy_for_CFs_2_&lt;atlas&gt;.rds</code></td>
+<td>Processed occupancy and spatial information prepared for the
+counterfactual analyses.</td>
+</tr>
+<tr class="even">
+<td><code>data/one_scale_atlas_with_elevation&lt;atlas&gt;.gpkg</code></td>
+<td>Analysis-scale atlas grid with elevation information attached.</td>
+</tr>
+<tr class="odd">
+<td><code>data/environment/climate/env_input_&lt;atlas&gt;.rds</code></td>
+<td>Prepared climate/environmental predictor data used by the
+climate-based counterfactual models.</td>
+</tr>
+<tr class="even">
+<td><code>data/counterfactuals2/c+l_sim_T2_species_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
+<td>Climate-based counterfactual model output for an individual species
+and atlas.</td>
+</tr>
+<tr class="odd">
+<td><code>data/counterfactuals2/simulated_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
+<td>Standard counterfactual simulations.</td>
+</tr>
+<tr class="even">
+<td><code>data/counterfactuals2/simulated_elevation_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
+<td>Elevation-based counterfactual simulations.</td>
+</tr>
+<tr class="odd">
+<td><code>data/counterfactuals2/simulated_env_&lt;species&gt;_&lt;atlas&gt;.rds</code></td>
+<td>Environmental counterfactual simulations.</td>
+</tr>
+<tr class="even">
+<td><code>data/&lt;atlas&gt;_overlap_chunk_&lt;chunk&gt;.rds</code></td>
+<td>Pairwise overlap results calculated in chunks for each atlas.</td>
+</tr>
+<tr class="odd">
+<td><code>data/uncertainty/results/results_&lt;atlas&gt;_&lt;method&gt;_chunk_&lt;chunk&gt;.rds</code></td>
+<td>Pairwise results from the uncertainty simulations.</td>
+</tr>
+<tr class="even">
+<td><code>data/counterfactuals2/results/results_&lt;atlas&gt;_&lt;method&gt;_chunk_&lt;chunk&gt;.rds</code></td>
+<td>Pairwise results from the counterfactual simulations.</td>
+</tr>
+<tr class="odd">
+<td><code>data/z_scores.rds</code></td>
+<td>Z-scores comparing observed pairwise associations with simulated
+expectations.</td>
+</tr>
+<tr class="even">
+<td><code>data/trait_analysis_input2.rds</code></td>
+<td>Trait data prepared for the trait-based analyses.</td>
+</tr>
+<tr class="odd">
+<td><code>data/AVONET1_BirdLife.csv</code></td>
+<td>Bird trait data used in the trait analyses.</td>
+</tr>
+<tr class="even">
+<td><code>data/final_analysis_input2.rds</code></td>
+<td>Combined final analysis dataset used for the main statistical
+analyses and figures.</td>
+</tr>
+<tr class="odd">
+<td><code>data/qualitative_transition_analysis.rds</code></td>
+<td>Data summarizing qualitative transitions in co-occurrence
+associations.</td>
+</tr>
+<tr class="even">
+<td><code>output/corT1T2.rds</code></td>
+<td>Results describing the relationship between co-occurrence patterns
+at time 1 and time 2.</td>
+</tr>
+<tr class="odd">
+<td><code>output/transition_stats_last.csv</code></td>
+<td>Summary statistics for the transition analysis.</td>
+</tr>
+<tr class="even">
+<td><code>output/model_phy_sig_output_&lt;atlas&gt;.rds</code></td>
+<td>Results of the phylogenetic-signal analyses.</td>
+</tr>
+<tr class="odd">
+<td><code>data/clim_file_names.csv</code></td>
+<td>Climate-file metadata used to link climate rasters to the analyses
+and figures.</td>
+</tr>
+<tr class="even">
+<td><code>figures2/*</code></td>
+<td>Figure outputs generated by <code>05_make_figures.R</code>.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="analysis-pipeline" class="section level1">
@@ -808,15 +693,15 @@ prepares the spatial input data for the counterfactual simulations. It
 also creates the spatial layers required by the elevation- and
 environment-informed counterfactuals.</p>
 </div>
-<div id="counterfactuals_server_with_uncertainty.r" class="section level2">
-<h2><code>01_counterfactuals_server_with_uncertainty.R</code></h2>
+<div id="counterfactuals_server.r" class="section level2">
+<h2><code>01_counterfactuals_server.R</code></h2>
 <p>Generates the spatial counterfactual communities and their associated
 uncertainty using the selected counterfactual method. This
 computationally intensive script is designed to be run on the server
 with multiple cores.</p>
 </div>
-<div id="counterfactuals_pairwise_analysis.r" class="section level2">
-<h2><code>02_counterfactuals_pairwise_analysis.R</code></h2>
+<div id="counterfactuals_pairwise_analysis_server.r" class="section level2">
+<h2><code>02_counterfactuals_pairwise_analysis_server.R</code></h2>
 <p>Calculates pairwise species associations from the observed and
 counterfactual communities. It compares associations across time and
 across counterfactual scenarios and saves the resulting pairwise

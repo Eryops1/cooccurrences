@@ -237,19 +237,19 @@ for(y in years){
   SEA_P = terra::app(tap, fun=function(x){sd(x)/mean(x)})
   SEA_P = round(SEA_P, 2)
   
-  writeRaster(MAT, filename=paste0("data/climate/annual/MAT_", y, "_", dataset_id, ".tif"),
+  writeRaster(MAT, filename=paste0("data/environment/climate/annual/MAT_", y, "_", dataset_id, ".tif"),
               overwrite = TRUE,
               datatype = "FLT4S",
               gdal = c("COMPRESS=ZSTD","PREDICTOR=2"))
-  writeRaster(TAP, filename=paste0("data/climate/annual/TAP_", y, "_", dataset_id,".tif"), 
+  writeRaster(TAP, filename=paste0("data/environment/climate/annual/TAP_", y, "_", dataset_id,".tif"), 
               overwrite = TRUE,
               datatype = "FLT4S",
               gdal = c("COMPRESS=ZSTD","PREDICTOR=2"))
-  writeRaster(SEA_T, filename=paste0("data/climate/annual/SEA_T_", y, "_", dataset_id,".tif"), 
+  writeRaster(SEA_T, filename=paste0("data/environment/climate/annual/SEA_T_", y, "_", dataset_id,".tif"), 
               overwrite = TRUE,
               datatype = "FLT4S",
               gdal = c("COMPRESS=ZSTD","PREDICTOR=2"))
-  writeRaster(SEA_P, filename=paste0("data/climate/annual/SEA_P_", y, "_", dataset_id,".tif"), 
+  writeRaster(SEA_P, filename=paste0("data/environment/climate/annual/SEA_P_", y, "_", dataset_id,".tif"), 
               overwrite = TRUE,
               datatype = "FLT4S",
               gdal = c("COMPRESS=ZSTD","PREDICTOR=2"))

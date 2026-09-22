@@ -23,12 +23,12 @@ source("99_functions.R")
 # Load data --------------------------------------------------------------------
 
 
-dataset_id = 26
+dataset_id = 26 # adjust as needed: 5,6,17,26
 
 if(dataset_id==6){scalID=2}else{scalID=1}
 
 dat = readRDS(paste0("data/processed_occupancy_for_CFs_2_",dataset_id,".rds"))
-files = dir("data/climate/annual", full.names = T, pattern = paste0("^" ,dataset_id, ".*(T1|T2)\\.tif"))
+files = dir("data/environment/climate/annual", full.names = T, pattern = paste0("^" ,dataset_id, ".*(T1|T2)\\.tif"))
 clim <- rast(files)
 nam = gsub(paste0(".*annual/",dataset_id,"_|\\.tif"), "", files)
 names(clim) = nam
@@ -98,7 +98,7 @@ ggplot(grid_sf, aes(fill=MAT_T2))+
 grid_dt = as.data.table(grid)
 
 
-saveRDS(grid_dt, paste0("data/climate/env_input_", dataset_id, ".rds"))
+saveRDS(grid_dt, paste0("data/environment/climate/env_input_", dataset_id, ".rds"))
 
 
 
