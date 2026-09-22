@@ -49,7 +49,7 @@ provided in the manuscript file and will be added here once it goes public.
 
 All analyses were run in R version 4.5.2. The R packages used are: `ape`, `broom`, `broom.mixed`, `caret`, `circlize`, `clootl`,
 `cluster`, `cowplot`, `data.table`, `exactextractr`, `gbm`, `geodata`,
-`ggeffects`, `ggplot2`, `ggpubr`, `ggpmisc`, `ggsci`, `ggtext`, `gt`, `knitr`,
+`ggeffects`, `ggplot2`, `ggpubr`, `ggpmisc`, `ggsci`, `ggtext`, `knitr`,
 `lmerMultiMember`, `MASS`, `parallel`, `performance`, `phytools`,
 `RhpcBLASctl`, `scico`, `scattermore`, `sf`, `sp`, `terra`, and `vegan`.
 Tested on Linux Mint 22.3, 32.5 GB RAM.

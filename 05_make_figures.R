@@ -655,14 +655,15 @@ diffs_sing[ ,larger_less_sim:=ifelse(p_greater<sig_level, "sim < obs",
 pairwise_res = merge(pairwise_res, diffs_sing, all.x=T)
 
 tmp = pairwise_res[!treatment %in% c("AM", "observed"),]
+tmp[, larger_less_sim_bi:=ifelse(larger_less_sim=="neutral", "neutral", "sim \U2260 obs"), ]
 cols = scico(2, palette="lipari", begin=0.3, end=0.7, direction = -1)
-#median(tmp$delta_cor_obs[dataset_id==5 & status=="sim > obs"])
+
 (p_scat= ggplot(tmp, 
                 aes(y=delta_cor_obs, x=delta_cor_median))+
     geom_abline(slope = c(0, 1e+10, 1), lty=2, col="grey")+
     #geom_pointdensity(alpha=0.1)+ 
     geom_point(data=tmp[larger_less_sim=="neutral"], alpha=0.05, aes(col=larger_less_sim))+
-    geom_point(data=tmp[larger_less_sim!="neutral"], alpha=0.05, aes(col=larger_less_sim))+
+    geom_point(data=tmp[larger_less_sim_bi!="neutral"], alpha=0.05, aes(col=larger_less_sim_bi))+
     scale_color_manual("", values = c(cols[2], cols[1], cols[1]))+
     stat_cor(method = "spearman", size=2.5, cor.coef.name = "rho", aes(label=..r.label..),
              col="black", label.y = +1, label.x = -0.92, r.accuracy = 0.01, p.accuracy = 0.001)+
@@ -717,7 +718,7 @@ pairwise_res$treatment = factor(pairwise_res$treatment,
 
 
 plot_grid(p_box, p_scat, labels = "auto", rel_widths = c(1,1.7))
-ggsave("figures2/box_scatter.png", width=9, height = 5, dpi=300)
+ggsave("figures/box_scatter.png", width=9, height = 5, dpi=300)
 
 
 
