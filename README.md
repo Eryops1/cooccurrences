@@ -13,7 +13,7 @@ basic geometric properties, simple environmental sorting and climate- and
 landuse change, and we analyse potential traits as drivers of differences
 between species pairs.
 
-![](figures2/fig1.png "Data and Processing")
+![](figures/fig1.png "Data and Processing")
 
 
 ## Desription of content & How to use
@@ -21,12 +21,11 @@ between species pairs.
 If you decide to use code or data from this repo, please simply cite the
 publication [doi will be inserted once published].
 
-You can download the entire repository and use the derived datasets included
-here to explore data, analysis, results, and figures. The computationally
+This repo containts code and final figures. The computationally
 intensive counterfactual and z-score steps are run separately on a server using
 the provided shell scripts. You will want to run these parts in parallel to
-reduce runtime. For the initial occupancy-probability data and other external
-input data, a second repository is necessary. These are provided separately both
+reduce runtime. 
+For the initial occupancy-probability and other data, **a second repository is necessary**. These are provided separately both
 for peer review and eventually publication. Link to this data repository is
 provided in the manuscript file and will be added here once it goes public.
 
@@ -48,8 +47,7 @@ provided in the manuscript file and will be added here once it goes public.
 
 ### Software
 
-All analyses were run in R version 4.5.2. The R packages actually used by the
-active code are: `ape`, `broom`, `broom.mixed`, `caret`, `circlize`, `clootl`,
+All analyses were run in R version 4.5.2. The R packages used are: `ape`, `broom`, `broom.mixed`, `caret`, `circlize`, `clootl`,
 `cluster`, `cowplot`, `data.table`, `exactextractr`, `gbm`, `geodata`,
 `ggeffects`, `ggplot2`, `ggpubr`, `ggpmisc`, `ggsci`, `ggtext`, `gt`, `knitr`,
 `lmerMultiMember`, `MASS`, `parallel`, `performance`, `phytools`,
@@ -96,34 +94,34 @@ Tested on Linux Mint 22.3, 32.5 GB RAM.
 
 # Analysis Pipeline
 
-## `00_climate_download.R`
+#### `00_climate_download.R`
 
 Downloads and prepares the climate and environmental raster data required for the analyses. It extracts elevation data and prepares climate layers for the two time periods and their differences.
 
-## `00_climate_models.R`
+#### `00_climate_models.R`
 
 Fits climate/environment-based species distribution models using the first time period and predicts species occurrences in the second time period. These predictions provide the climate-based counterfactual used in subsequent analyses.
 
-## `00_counterfactuals_prep.R`
+#### `00_counterfactuals_prep.R`
 
 Processes and quality-controls the species occurrence data and prepares the spatial input data for the counterfactual simulations. It also creates the spatial layers required by the elevation- and environment-informed counterfactuals.
 
-## `01_counterfactuals_server.R`
+#### `01_counterfactuals_server.R`
 
 Generates the spatial counterfactual communities and their associated uncertainty using the selected counterfactual method. This computationally intensive script is designed to be run on the server with multiple cores.
 
-## `02_counterfactuals_pairwise_analysis_server.R`
+#### `02_counterfactuals_pairwise_analysis_server.R`
 
 Calculates pairwise species associations from the observed and counterfactual communities. It compares associations across time and across counterfactual scenarios and saves the resulting pairwise statistics.
 
-## `03_z_scores_server.R`
+#### `03_z_scores_server.R`
 
 Quantifies qualitative changes in species associations by comparing observed association changes with randomized expectations. The computationally intensive permutation procedure is run separately on the server using many cores.
 
-## `04_all_analysis.R`
+#### `04_all_analysis.R`
 
 Combines the results from the preceding analyses to quantify changes in community associations and their relationships with species traits and other community properties. It produces the statistical results and processed datasets used to generate the figures.
 
-## `05_make_figures.R`
+#### `05_make_figures.R`
 
 Generates all main and supplementary figures from the saved analysis results. No substantive analyses are performed here beyond calculations directly required for visualization.
