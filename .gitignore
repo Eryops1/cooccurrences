@@ -59,6 +59,8 @@ data/
 trait_analysis_input2.rds
 final_analysis_input2.rds
 output/corT1T2.rds
+output/brms_model_output_5.rds
+
 
 
 # species maps
