@@ -55,15 +55,14 @@ rsconnect/
 # DATA - add later to zenodo
 data/
 
-# BIG FILES > 100MB
+# BIG FILES > 100MB - make extra sure those are not in here
 trait_analysis_input2.rds
 final_analysis_input2.rds
+output/corT1T2.rds
+
 
 # species maps
 maps/
-
-
-
 
 # submission documents etc
 submission_stuff/
