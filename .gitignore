@@ -54,6 +54,7 @@ rsconnect/
 
 # DATA - add later to zenodo
 data/
+data.tar.gz
 
 # BIG FILES > 100MB - make extra sure those are not in here
 trait_analysis_input2.rds
